@@ -16,6 +16,8 @@
   # changes in each release.
   home.stateVersion = "22.05";
 
+  home.packages = pkgs.callPackage ./packages.nix {};
+
   programs = {
     # Let Home Manager install and manage itself.
     home-manager.enable = true;
@@ -144,9 +146,7 @@
         enableZshIntegration = true;
       };
 
-      fzf = {
-        enable = false;
-      };
+      fzf.enable = true;
 
       neovim = {
         enable = true;
