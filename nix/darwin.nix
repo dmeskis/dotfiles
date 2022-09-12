@@ -6,9 +6,6 @@
   environment.systemPackages = with pkgs; [
     fd
     cheat
-    git
-    jq
-    htop
     nixfmt
     ruby
     shellcheck
