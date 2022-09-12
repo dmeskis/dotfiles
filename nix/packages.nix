@@ -1,6 +1,7 @@
 { pkgs }:
 
 with pkgs; [
+  aws-vault
   awscli2
   bandwhich
   bat
