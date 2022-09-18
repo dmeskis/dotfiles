@@ -13,6 +13,19 @@
     zsh
   ];
 
+  homebrew = {
+    enable = true;
+    taps = [
+      "wez/wezterm"
+    ];
+    casks = [
+      "raycast"
+      "wezterm"
+      "rectangle"
+      "spotify"
+    ];
+  };
+
   system.defaults.NSGlobalDomain.AppleKeyboardUIMode = 3;
   system.defaults.NSGlobalDomain.ApplePressAndHoldEnabled = false;
   system.defaults.NSGlobalDomain.InitialKeyRepeat = 15;
@@ -38,7 +51,7 @@
   system.defaults.trackpad.Clicking = true;
   system.defaults.trackpad.TrackpadThreeFingerDrag = true;
 
-  system.keyboard.enableKeyMapping = false;
+  system.keyboard.enableKeyMapping = true;
   system.keyboard.remapCapsLockToControl = true;
 
   system.defaults.finder.ShowStatusBar = true;
