@@ -15,7 +15,6 @@
   # the Home Manager release notes for a list of state version
   # changes in each release.
   home.stateVersion = "22.05";
-
   home.packages = pkgs.callPackage ./packages.nix {};
 
   programs = {
@@ -188,6 +187,7 @@
 
        wezterm = {
          enable = true;
+         extraConfig = builtins.readFile ./home/extraConfig.wezterm.lua;
        };
 
      };

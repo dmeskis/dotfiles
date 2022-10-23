@@ -7,6 +7,7 @@ with pkgs; [
   bat
   cheat
   curl
+  exercism
   fd
   imgcat
   kubectl
@@ -14,6 +15,7 @@ with pkgs; [
   ruby
   ripgrep
   shellcheck
+  tig
   tree
   unzip
   wget

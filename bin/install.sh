@@ -9,13 +9,6 @@ then
 	sh <(curl -L https://nixos.org/nix/install)
 fi
 
-# Nix config
-
-mkdir -p ~/.config/nix
-
-cat <<EOF > ~/.config/nix/nix.conf
-experimental-features = nix-command flakes
-EOF
 
 # Install nix-darwin
 
