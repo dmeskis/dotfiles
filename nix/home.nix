@@ -235,7 +235,9 @@
          extraConfig = builtins.readFile ./home/extraConfig.wezterm.lua;
        };
 
+       zoxide = {
+         enable = true;
+         enableZshIntegration = true;
+       };
      };
-
-
-}
+   }
