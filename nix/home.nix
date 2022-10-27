@@ -95,6 +95,8 @@
           show = "delta";
           branch = false;
         };
+
+        push.autoSetupRemote = true;
       };
 
       ignores = [
