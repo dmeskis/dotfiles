@@ -178,6 +178,11 @@
         # localVariables
       };
 
+      starship = {
+        enable = true;
+        enableZshIntegration = true;
+      };
+
       bat.enable = true;
 
       direnv = {
