@@ -59,6 +59,44 @@
         cleanup = "git branch --merged master | grep -v -e 'master' -e '\*' | xargs -n 1 git branch -d && git remote prune origin";
       };
 
+      delta = {
+        enable = true;
+        options = {
+          navigate = true;
+          side-by-side = true;
+        };
+      };
+
+      extraConfig = {
+        credential.helper = "osxkeychain";
+
+        color.ui = true;
+        color.branch = {
+          current = "yellow reverse";
+          local = "yellow";
+          remote = "green";
+        };
+        color.diff = {
+          meta = "yellow bold";
+          frag = "magenta bold";
+          old = "red bold";
+          new = "green bold";
+        };
+        color.status = {
+          added = "yellow";
+          changed = "green";
+          untracked = "cyan";
+        };
+
+        pager = {
+          diff = "delta";
+          log = "delta";
+          reflog = "delta";
+          show = "delta";
+          branch = false;
+        };
+      };
+
       ignores = [
         "*~"
         "*.swp"
