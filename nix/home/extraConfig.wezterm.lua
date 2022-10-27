@@ -1,6 +1,8 @@
 local act = wezterm.action
 
 return {
+  color_scheme = "Gruvbox dark, medium (base16)",
+  font_size = 13.0,
   leader = { key = 'a', mods = 'CMD' },
   keys = {
     {
