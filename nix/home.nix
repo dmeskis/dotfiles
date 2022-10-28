@@ -1,5 +1,4 @@
 { config, pkgs, ... }:
-
 {
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
@@ -201,6 +200,7 @@
            vim-ruby
            vim-go
            rust-vim
+           # nvim-treesitter # need neovim 0.8, wait or use unstable channel
 
            # UI
            gruvbox
@@ -209,13 +209,14 @@
 
            # Editor features
            # vim-abolish
+           # vim-characterize
            vim-surround # cs"'
            vim-repeat # cs"'...
            vim-commentary # gcap
            vim-indent-object # >aI
            # vim-easy-align # vipga
            vim-eunuch # :Rename foo.rb
-           # vim-sneak
+           # vim-sneak # Or leap.nvim || hop.nvim
            # supertab
            ale # linting - ALEFix
            nerdtree
@@ -223,12 +224,32 @@
            # Buffer / Pane / File Management
            telescope-nvim
            telescope-fzf-native-nvim
-           # nvim-treesitter # need neovim 0.8, wait or use unstable channel
-           # fzf-vim
 
            # Panes / Larger features
            # tagbar - look into
            vim-fugitive # Gblame
+
+           # Lua
+           # plenary-nvim
+           # popup-nvim
+
+           # Check out
+           # nvim-dap
+           # packer.nvim
+           # undotree
+           # refactoring.nvim
+           # fidget.nvim
+           # trouble.nvim *
+           # https://github.com/nvim-telescope/telescope-github.nvim
+           # git-messenger * Looks neat!
+           # octo-nvim
+           # git-worktree
+           # which-key
+           # marks.nvim
+           # harpoon *
+           # neorg (replace obsidian/notion?)
+           # dirbuf
+           # targets.nvim
          ];
        };
 
@@ -241,6 +262,7 @@
          enable = true;
          enableZshIntegration = true;
        };
+
      };
 
   # More config files
@@ -248,4 +270,5 @@
     "nvim/init.lua".text = builtins.readFile ./home/nvim.init.lua;
     "ideavim/ideavimrc".text = builtins.readFile ./home/ideavimrc;
   };
+
 }
