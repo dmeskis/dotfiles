@@ -72,11 +72,8 @@
 
         color.ui = true;
         color.branch = {
-          current = "yellow reverse";
-          local = "yellow";
-          remote = "green";
-        };
-        color.diff = {
+          current = "magenta reverse";
+          local = "yellow"; remote = "green"; }; color.diff = {
           meta = "yellow bold";
           frag = "magenta bold";
           old = "red bold";
@@ -198,7 +195,6 @@
       neovim = {
         enable = true;
         vimAlias = true;
-        extraConfig = builtins.readFile ./home/extraConfig.vim;
         plugins = with pkgs.vimPlugins; [
            # Syntax
            vim-nix
@@ -209,7 +205,7 @@
            # UI
            gruvbox
            vim-gitgutter
-           vim-airline
+           lualine-nvim
 
            # Editor features
            # vim-abolish
@@ -225,7 +221,10 @@
            nerdtree
 
            # Buffer / Pane / File Management
-           fzf-vim
+           telescope-nvim
+           telescope-fzf-native-nvim
+           # nvim-treesitter # need neovim 0.8, wait or use unstable channel
+           # fzf-vim
 
            # Panes / Larger features
            # tagbar - look into
@@ -243,4 +242,10 @@
          enableZshIntegration = true;
        };
      };
-   }
+
+  # More config files
+  xdg.configFile = {
+    "nvim/init.lua".text = builtins.readFile ./home/nvim.init.lua;
+    "ideavim/ideavimrc".text = builtins.readFile ./home/ideavimrc;
+  };
+}
