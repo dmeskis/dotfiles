@@ -201,10 +201,32 @@
            vim-go
            rust-vim
 
-           nvim-treesitter
+           (nvim-treesitter.withPlugins (
+             plugins: with plugins; [
+               tree-sitter-bash
+               tree-sitter-c
+               tree-sitter-cpp
+               tree-sitter-dockerfile
+               tree-sitter-fish
+               tree-sitter-go
+               tree-sitter-html
+               tree-sitter-json
+               tree-sitter-latex
+               tree-sitter-lua
+               tree-sitter-nix
+               tree-sitter-python
+               tree-sitter-r
+               tree-sitter-regex
+               tree-sitter-rust
+               tree-sitter-toml
+               tree-sitter-vim
+               tree-sitter-yaml
+             ]
+             ))
 
            # UI
-           gruvbox
+           colorbuddy-nvim
+           gruvbox-material
            vim-gitgutter
            lualine-nvim
 

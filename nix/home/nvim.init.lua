@@ -4,12 +4,13 @@ local wo = vim.wo --window-local options
 local bo = vim.bo -- buffer-local options
 local map = vim.api.nvim_set_keymap
 
+require('colorbuddy').colorscheme('gruvbox-material')
+
 -- Hacks & quickfixes {{{
 -- https://github.com/nvim-telescope/telescope.nvim/issues/2145
 vim.cmd('hi NormalFloat ctermfg=LightGrey')
 -- }}}
 
-vim.g.colorscheme = 'gruvbox'
 
 o.number = true
 o.relativenumber = true
@@ -81,13 +82,18 @@ vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 -- }}}
 
-
-
+-- nvim-treesitter {{{
+require'nvim-treesitter.configs'.setup {
+    highlight = {
+        enable = true,
+    }
+}
+-- }}}
 
 -- lualine {{{
 require('lualine').setup {
   options = {
-      theme = 'gruvbox',
+      theme = 'gruvbox-material',
       always_divide_middle = true;
   }
 }
