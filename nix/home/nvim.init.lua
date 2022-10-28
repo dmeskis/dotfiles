@@ -4,6 +4,11 @@ local wo = vim.wo --window-local options
 local bo = vim.bo -- buffer-local options
 local map = vim.api.nvim_set_keymap
 
+-- Hacks & quickfixes {{{
+-- https://github.com/nvim-telescope/telescope.nvim/issues/2145
+vim.cmd('hi NormalFloat ctermfg=LightGrey')
+-- }}}
+
 vim.g.colorscheme = 'gruvbox'
 
 o.number = true

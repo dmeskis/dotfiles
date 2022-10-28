@@ -159,13 +159,13 @@
       sessionVariables = rec {
         NVIM_TUI_ENABLE_TRUE_COLOR = "1";
 
-        HOME_MANAGER_CONFIG = ~/dotfiles/nix/home.nix;
+        HOME_MANAGER_CONFIG = /Users/dylanmeskis/dotfiles/nix/home.nix;
 
         EDITOR = "vim";
         VISUAL = EDITOR;
         GIT_EDITOR = EDITOR;
 
-        CHEAT_CONFIG_PATH = ~/dotfiles/cheat/conf.yml;
+        CHEAT_CONFIG_PATH = /Users/dylanmeskis/dotfiles/cheat/conf.yml;
         # GOPATH = "$HOME";
 
         # PATH = "$HOME/.emacs.d/bin:$HOME/bin:$PATH";
