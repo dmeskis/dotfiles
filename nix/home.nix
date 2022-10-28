@@ -200,7 +200,8 @@
            vim-ruby
            vim-go
            rust-vim
-           # nvim-treesitter # need neovim 0.8, wait or use unstable channel
+
+           nvim-treesitter
 
            # UI
            gruvbox
@@ -223,7 +224,7 @@
 
            # Buffer / Pane / File Management
            telescope-nvim
-           telescope-fzf-native-nvim
+           # telescope-fzf-native-nvim
 
            # Panes / Larger features
            # tagbar - look into
