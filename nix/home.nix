@@ -83,9 +83,12 @@
           new = "green bold";
         };
         color.status = {
-          added = "yellow";
-          changed = "green";
+          added = "green";
+          changed = "yellow";
           untracked = "cyan";
+          branch = "magenta";
+          nobranch = "normal";
+          unmerged = "red";
         };
 
         pager = {
