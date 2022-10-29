@@ -87,13 +87,78 @@ require 'lspconfig'.gopls.setup{
 		vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, {buffer=0})
 	end,
 }
--- tell nvim to use gopls
 -- }}}
 	
 -- }}}
 
 
+-- completion {{{
+local cmp = require "cmp"
+local lspkind = require "lspkind"
 
+cmp.setup{
+	-- more to do here
+	mapping = {
+		["<C-n>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
+		["<C-p>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
+		["<C-d>"] = cmp.mapping.scroll_docs(-4),
+		["<C-f>"] = cmp.mapping.scroll_docs(4),
+		["<C-e>"] = cmp.mapping.close(),
+		["<C-y>"] = cmp.mapping.confirm {
+			behavior = cmp.ConfirmBehavior.Insert,
+			select = true,
+		},
+		-- ["<c-space>"] = cmp.mapping.complete(),
+
+		["<c-space>"] = cmp.mapping {
+			i = cmp.mapping.complete(),
+			c = function(
+				_ --[[fallback]]
+				)
+				if cmp.visible() then
+					if not cmp.confirm { select = true } then
+						return
+					end
+				else
+					cmp.complete()
+				end
+			end,
+		},
+
+		["<tab>"] = cmp.config.disable,
+	},
+	-- Order matters (by default). That gives them priority
+	-- you can configure:
+	-- 	keyword_length
+	-- 	priority
+	-- 	max_item_count
+	-- 	(more?)
+	sources = {
+		-- TODO: watch youtube.com/watch?v=_Dnmphlwnjo around 26 min & add github_issues
+		-- you can only enable for specific file types, but the source knows to do that
+		{ name = "nvim_lua" },
+		{ name = "nvim_lsp" },
+		{ name = "path" },
+		{ name = "buffer" },
+	},
+
+	formatting = {
+		format = lspkind.cmp_format {
+			with_text = true,
+			menu = {
+				buffer = "[buf]",
+				nvim_lsp = "[LSP]",
+				nvim_lua = "[api]",
+				path = "[path]",
+				luasnip = "[snip]",
+			}
+		}
+	},
+
+	-- TODO add Highlight groups, can highlight deprecated functions and things of that sort
+}
+
+-- }}}
 
 -- Plugin config {{{
 

@@ -1,4 +1,9 @@
 { config, pkgs, ... }:
+let
+  relativeXDGConfigPath = ".config";
+  relativeXDGDataPath = ".local/share";
+  relativeXDGCachePath = ".cache";
+in
 {
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
@@ -15,6 +20,12 @@
   # changes in each release.
   home.stateVersion = "22.05";
   home.packages = pkgs.callPackage ./packages.nix {};
+
+  xdg.enable = true;
+  xdg.configHome =
+    "/Users/dylanmeskis/${relativeXDGConfigPath}";
+  xdg.dataHome = "/Users/dylanmeskis/${relativeXDGDataPath}";
+  xdg.cacheHome = "/Users/dylanmeskis/${relativeXDGCachePath}";
 
   programs = {
     # Let Home Manager install and manage itself.
@@ -117,44 +128,46 @@
       enable = true;
       enableCompletion = true;
       enableAutosuggestions = true;
+      enableSyntaxHighlighting = true;
+      history = {
+        path = "${relativeXDGDataPath}/zsh/.zsh_history";
+        size = 50000;
+        save = 50000;
+      };
       shellAliases = import ./home/aliases.nix;
       defaultKeymap = "emacs";
       initExtraBeforeCompInit = builtins.readFile ./home/pre-compinit.zsh;
       initExtra = builtins.readFile ./home/post-compinit.zsh;
-      # initExtraBeforeCompInit = ''
-      #     eval $(${pkgs.coreutils}/bin/dircolors -b ${./home/LS_COLORS})
-      #     ${builtins.readFile ./home/pre-compinit.zsh}
-      # '';
 
-      plugins = [
-        {
-          name = "zsh-autosuggestions";
-          src = pkgs.fetchFromGitHub {
-            owner = "zsh-users";
-            repo = "zsh-autosuggestions";
-            rev = "v0.7.0";
-            sha256 = "gOG0NLlaJfotJfs+SUhGgLTNOnGLjoqnUp54V9aFJg8=";
-          };
-        }
-        {
-          name = "zsh-syntax-highlighting";
-          src = pkgs.fetchFromGitHub {
-            owner = "zsh-users";
-            repo = "zsh-syntax-highlighting";
-            rev = "0.7.1";
-            sha256 = "gOG0NLlaJfotJfs+SUhGgLTNOnGLjoqnUp54V9aFJg8=";
-          };
-        }
-        {
-          name = "zsh-completions";
-          src = pkgs.fetchFromGitHub {
-            owner = "zsh-users";
-            repo = "zsh-completions";
-            rev = "0.34.0";
-            sha256 = "gOG0NLlaJfotJfs+SUhGgLTNOnGLjoqnUp54V9aFJg8=";
-          };
-        }
-      ];
+      # plugins = [
+      #   {
+      #     name = "zsh-autosuggestions";
+      #     src = pkgs.fetchFromGitHub {
+      #       owner = "zsh-users";
+      #       repo = "zsh-autosuggestions";
+      #       rev = "v0.7.0";
+      #       sha256 = "gOG0NLlaJfotJfs+SUhGgLTNOnGLjoqnUp54V9aFJg8=";
+      #     };
+      #   }
+      #   {
+      #     name = "zsh-syntax-highlighting";
+      #     src = pkgs.fetchFromGitHub {
+      #       owner = "zsh-users";
+      #       repo = "zsh-syntax-highlighting";
+      #       rev = "0.7.1";
+      #       sha256 = "gOG0NLlaJfotJfs+SUhGgLTNOnGLjoqnUp54V9aFJg8=";
+      #     };
+      #   }
+      #   {
+      #     name = "zsh-completions";
+      #     src = pkgs.fetchFromGitHub {
+      #       owner = "zsh-users";
+      #       repo = "zsh-completions";
+      #       rev = "0.34.0";
+      #       sha256 = "gOG0NLlaJfotJfs+SUhGgLTNOnGLjoqnUp54V9aFJg8=";
+      #     };
+      #   }
+      # ];
 
       sessionVariables = rec {
         NVIM_TUI_ENABLE_TRUE_COLOR = "1";
@@ -203,7 +216,7 @@
 
            (nvim-treesitter.withPlugins (
              plugins: with plugins; [
-               tree-sitter-bash
+               # tree-sitter-bash
                tree-sitter-c
                tree-sitter-cpp
                tree-sitter-dockerfile
@@ -254,6 +267,15 @@
 
            # lsp
            nvim-lspconfig
+
+           # completion
+           nvim-cmp
+           cmp-nvim-lsp
+           cmp-nvim-lua
+           cmp-buffer
+           cmp-path
+           lspkind-nvim
+           # cmp_luasnip
 
            # Lua
            # plenary-nvim
