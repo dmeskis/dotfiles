@@ -28,7 +28,7 @@ o.undodir = '~/.config/nvim/undo'
 o.undofile = true
 -- }}}
 
--- Environment {{{ 
+-- Environment {{{
 -- map */+ registers to macOS pastebuffer
 o.clipboard = unnamed
 -- }}}
@@ -56,8 +56,8 @@ o.scrolloff=3
 
 -- Mappings {{{
 options = { noremap = true }
-map('n', '<leader>sv', ':source ~/dotfiles/nix/home/nvim.init.lua<cr>', options)
-map('n', '<leader>ev', ':edit ~/dotfiles/nix/home/nvim.init.lua<cr>', options)
+map('n', '<leader>sv', ':source ~/dotfiles/nix/home/init.lua<cr>', options)
+map('n', '<leader>ev', ':edit ~/dotfiles/nix/home/init.lua<cr>', options)
 
 -- kj = <esc> {{{
 map('i', 'kj', '<esc>', options)
@@ -69,8 +69,19 @@ map('n', '<C-h>', '<C-w>h', options)
 map('n', '<C-j>', '<C-w>j', options)
 map('n', '<C-k>', '<C-w>k', options)
 map('n', '<C-l>', '<C-w>l', options)
-
 -- }}}
+
+-- native lsp config {{{
+
+-- golang {{{
+-- get gopls -> on PATH
+-- tell nvim to use gopls
+-- }}}
+	
+-- }}}
+
+
+
 
 -- Plugin config {{{
 

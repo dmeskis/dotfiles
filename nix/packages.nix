@@ -9,6 +9,8 @@ with pkgs; [
   curl
   exercism
   fd
+  go_1_18
+  gopls
   imgcat
   kubectl
   nixfmt

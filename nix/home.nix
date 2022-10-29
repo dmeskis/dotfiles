@@ -290,7 +290,7 @@
 
   # More config files
   xdg.configFile = {
-    "nvim/init.lua".text = builtins.readFile ./home/nvim.init.lua;
+    "nvim/init.lua".text = builtins.readFile ./home/init.lua;
     "ideavim/ideavimrc".text = builtins.readFile ./home/ideavimrc;
   };
 
