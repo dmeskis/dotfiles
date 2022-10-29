@@ -252,6 +252,9 @@
            # tagbar - look into
            vim-fugitive # Gblame
 
+           # lsp
+           nvim-lspconfig
+
            # Lua
            # plenary-nvim
            # popup-nvim
