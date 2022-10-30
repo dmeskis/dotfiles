@@ -2,6 +2,7 @@
 let
   relativeXDGConfigPath = ".config";
   relativeXDGDataPath = ".local/share";
+  relativeXDGStatePath = ".local/state";
   relativeXDGCachePath = ".cache";
 in
 {
@@ -26,6 +27,7 @@ in
     "/Users/dylanmeskis/${relativeXDGConfigPath}";
   xdg.dataHome = "/Users/dylanmeskis/${relativeXDGDataPath}";
   xdg.cacheHome = "/Users/dylanmeskis/${relativeXDGCachePath}";
+  xdg.stateHome = "/Users/dylanmeskis/${relativeXDGStatePath}";
 
   programs = {
     # Let Home Manager install and manage itself.
@@ -138,36 +140,6 @@ in
       defaultKeymap = "emacs";
       initExtraBeforeCompInit = builtins.readFile ./home/pre-compinit.zsh;
       initExtra = builtins.readFile ./home/post-compinit.zsh;
-
-      # plugins = [
-      #   {
-      #     name = "zsh-autosuggestions";
-      #     src = pkgs.fetchFromGitHub {
-      #       owner = "zsh-users";
-      #       repo = "zsh-autosuggestions";
-      #       rev = "v0.7.0";
-      #       sha256 = "gOG0NLlaJfotJfs+SUhGgLTNOnGLjoqnUp54V9aFJg8=";
-      #     };
-      #   }
-      #   {
-      #     name = "zsh-syntax-highlighting";
-      #     src = pkgs.fetchFromGitHub {
-      #       owner = "zsh-users";
-      #       repo = "zsh-syntax-highlighting";
-      #       rev = "0.7.1";
-      #       sha256 = "gOG0NLlaJfotJfs+SUhGgLTNOnGLjoqnUp54V9aFJg8=";
-      #     };
-      #   }
-      #   {
-      #     name = "zsh-completions";
-      #     src = pkgs.fetchFromGitHub {
-      #       owner = "zsh-users";
-      #       repo = "zsh-completions";
-      #       rev = "0.34.0";
-      #       sha256 = "gOG0NLlaJfotJfs+SUhGgLTNOnGLjoqnUp54V9aFJg8=";
-      #     };
-      #   }
-      # ];
 
       sessionVariables = rec {
         NVIM_TUI_ENABLE_TRUE_COLOR = "1";
@@ -296,6 +268,7 @@ in
            # marks.nvim
            # harpoon *
            # neorg (replace obsidian/notion?)
+           # obsidian.nvim * complement obsidian?
            # dirbuf
            # targets.nvim
          ];

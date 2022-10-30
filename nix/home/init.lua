@@ -22,9 +22,9 @@ vim.g.maplocalleader = '\\'
 
 
 -- Backup/swap/undo directories {{{
-o.backupdir = '~/.config/nvim/backup'
-o.directory = '~/.config/nvim/swaps'
-o.undodir = '~/.config/nvim/undo'
+o.backupdir = '$HOME/.local/state/nvim/backup//'
+o.directory = '$HOME/.local/state/nvim/swap//'
+o.undodir = '$HOME/.local/state/nvim/undo//'
 o.undofile = true
 -- }}}
 
@@ -77,13 +77,15 @@ map('n', '<C-l>', '<C-w>l', options)
 require 'lspconfig'.gopls.setup{
 	on_attach = function()
 		vim.keymap.set('n', 'K', vim.lsp.buf.hover, {buffer=0})
+		vim.keymap.set('n', '<c-s>', vim.lsp.buf.signature_help, {buffer=0})
 		vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {buffer=0})
-		vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, {buffer=0})
-		vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, {buffer=0})
+		vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, {buffer=0})
+		vim.keymap.set('n', 'gT', vim.lsp.buf.type_definition, {buffer=0})
+		vim.keymap.set('n', 'gI', vim.lsp.buf.implementation, {buffer=0})
 		vim.keymap.set('n', '<leader>dn', vim.diagnostic.goto_next, {buffer=0})
 		vim.keymap.set('n', '<leader>dp', vim.diagnostic.goto_prev, {buffer=0})
 		vim.keymap.set('n', '<leader>dl', "<cmd>Telescope diagnostics<cr>", {buffer=0})
-		vim.keymap.set('n', '<leader>r', vim.lsp.buf.rename, {buffer=0})
+		vim.keymap.set('n', '<leader>cr', vim.lsp.buf.rename, {buffer=0})
 		vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, {buffer=0})
 	end,
 }
@@ -108,7 +110,6 @@ cmp.setup{
 			behavior = cmp.ConfirmBehavior.Insert,
 			select = true,
 		},
-		-- ["<c-space>"] = cmp.mapping.complete(),
 
 		["<c-space>"] = cmp.mapping {
 			i = cmp.mapping.complete(),
@@ -134,12 +135,12 @@ cmp.setup{
 	-- 	max_item_count
 	-- 	(more?)
 	sources = {
-		-- TODO: watch youtube.com/watch?v=_Dnmphlwnjo around 26 min & add github_issues
 		-- you can only enable for specific file types, but the source knows to do that
 		{ name = "nvim_lua" },
 		{ name = "nvim_lsp" },
 		{ name = "path" },
 		{ name = "buffer" },
+		-- TODO: watch youtube.com/watch?v=_Dnmphlwnjo around 26 min & add github_issues
 	},
 
 	formatting = {
@@ -155,7 +156,7 @@ cmp.setup{
 		}
 	},
 
-	-- TODO add Highlight groups, can highlight deprecated functions and things of that sort
+	-- TODO add Highlight groups, can highlight deprecated functions and other fun things
 }
 
 -- }}}
@@ -163,6 +164,7 @@ cmp.setup{
 -- Plugin config {{{
 
 -- nvim-telescope telescope.nvim {{{
+-- https://github.com/tjdevries/config_manager/blob/286d247041868b45fbd00c972af8e5d0aeb24caa/xdg_config/nvim/lua/tj/telescope/mappings.lua
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
