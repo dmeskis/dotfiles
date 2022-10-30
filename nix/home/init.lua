@@ -3,6 +3,7 @@ local o = vim.o -- global options
 local wo = vim.wo --window-local options
 local bo = vim.bo -- buffer-local options
 local map = vim.api.nvim_set_keymap
+local os = os
 
 require('colorbuddy').colorscheme('gruvbox-material')
 
@@ -20,11 +21,10 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = '\\'
 -- }}}
 
-
 -- Backup/swap/undo directories {{{
-o.backupdir = '$HOME/.local/state/nvim/backup//'
-o.directory = '$HOME/.local/state/nvim/swap//'
-o.undodir = '$HOME/.local/state/nvim/undo//'
+o.backupdir = os.getenv("HOME") .. '/.local/state/nvim/backup//'
+o.directory = os.getenv("HOME") .. '/.local/state/nvim/swap//'
+o.undodir = os.getenv("HOME") .. '/.local/state/nvim/undo//'
 o.undofile = true
 -- }}}
 
