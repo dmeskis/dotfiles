@@ -1,10 +1,4 @@
 { config, pkgs, ... }:
-let
-  relativeXDGConfigPath = ".config";
-  relativeXDGDataPath = ".local/share";
-  relativeXDGStatePath = ".local/state";
-  relativeXDGCachePath = ".cache";
-in
 {
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
@@ -23,11 +17,6 @@ in
   home.packages = pkgs.callPackage ./packages.nix {};
 
   xdg.enable = true;
-  xdg.configHome =
-    "/Users/dylanmeskis/${relativeXDGConfigPath}";
-  xdg.dataHome = "/Users/dylanmeskis/${relativeXDGDataPath}";
-  xdg.cacheHome = "/Users/dylanmeskis/${relativeXDGCachePath}";
-  xdg.stateHome = "/Users/dylanmeskis/${relativeXDGStatePath}";
 
   programs = {
     # Let Home Manager install and manage itself.
@@ -132,7 +121,7 @@ in
       enableAutosuggestions = true;
       enableSyntaxHighlighting = true;
       history = {
-        path = "${relativeXDGDataPath}/zsh/.zsh_history";
+        path = "${config.xdg.dataHome}/zsh/.zsh_history";
         size = 50000;
         save = 50000;
       };
@@ -144,13 +133,13 @@ in
       sessionVariables = rec {
         NVIM_TUI_ENABLE_TRUE_COLOR = "1";
 
-        HOME_MANAGER_CONFIG = /Users/dylanmeskis/dotfiles/nix/home.nix;
+        HOME_MANAGER_CONFIG = "${config.home.homeDirectory}/dotfiles/nix/home.nix";
 
         EDITOR = "vim";
         VISUAL = EDITOR;
         GIT_EDITOR = EDITOR;
 
-        CHEAT_CONFIG_PATH = /Users/dylanmeskis/dotfiles/cheat/conf.yml;
+        CHEAT_CONFIG_PATH = "${config.home.homeDirectory}/dotfiles/cheat/conf.yml";
         # GOPATH = "$HOME";
 
         # PATH = "$HOME/.emacs.d/bin:$HOME/bin:$PATH";

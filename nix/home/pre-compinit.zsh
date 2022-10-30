@@ -2,9 +2,6 @@
 PS1='%(?.%(!.#.;).%F{6}%B;%b%f) '
 
 # History/reverse-search
-HISTSIZE=5000
-HISTFILE=~/.zsh_history
-SAVEHIST=5000
 HISTDUP=erase
 setopt appendhistory
 setopt sharehistory
