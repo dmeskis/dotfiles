@@ -214,9 +214,9 @@
            # vim-easy-align # vipga
            vim-eunuch # :Rename foo.rb
            # vim-sneak # Or leap.nvim || hop.nvim
-           # supertab
            ale # linting - ALEFix
-           nerdtree
+           tabular # TODO add https://github.com/tjdevries/config_manager/blob/7958de40dac4400a244ab5a0f04b9a9e60202fab/xdg_config/nvim/after/plugin/tabular.vim
+           # nerdtree
 
            # Buffer / Pane / File Management
            telescope-nvim
