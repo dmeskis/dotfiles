@@ -2,7 +2,6 @@
 local o = vim.o -- global options
 local wo = vim.wo --window-local options
 local bo = vim.bo -- buffer-local options
-local map = vim.api.nvim_set_keymap
 local os = os
 
 require('colorbuddy').colorscheme('gruvbox-material')
@@ -56,41 +55,109 @@ o.scrolloff=3
 
 -- Mappings {{{
 options = { noremap = true }
-map('n', '<leader>sv', ':source ~/dotfiles/nix/home/init.lua<cr>', options)
-map('n', '<leader>ev', ':edit ~/dotfiles/nix/home/init.lua<cr>', options)
+vim.keymap.set('n', '<leader>sv', ':source ~/dotfiles/nix/home/init.lua<cr>', options)
+vim.keymap.set('n', '<leader>ev', ':edit ~/dotfiles/nix/home/init.lua<cr>', options)
 
--- kj = <esc> {{{
-map('i', 'kj', '<esc>', options)
-map('c', 'kj', '<esc>', options)
-map('v', 'kj', '<esc>', options)
+-- kj = <esc>
+vim.keymap.set('i', 'kj', '<esc>', options)
+vim.keymap.set('c', 'kj', '<esc>', options)
+vim.keymap.set('v', 'kj', '<esc>', options)
 
 -- Jumping between windows
-map('n', '<C-h>', '<C-w>h', options)
-map('n', '<C-j>', '<C-w>j', options)
-map('n', '<C-k>', '<C-w>k', options)
-map('n', '<C-l>', '<C-w>l', options)
+vim.keymap.set('n', '<C-h>', '<C-w>h', options)
+vim.keymap.set('n', '<C-j>', '<C-w>j', options)
+vim.keymap.set('n', '<C-k>', '<C-w>k', options)
+vim.keymap.set('n', '<C-l>', '<C-w>l', options)
+
 -- }}}
 
 -- native lsp config {{{
+-- TODO: Look into using mason.nvim to manage this stuff
 
--- golang {{{
-require 'lspconfig'.gopls.setup{
-	on_attach = function()
-		vim.keymap.set('n', 'K', vim.lsp.buf.hover, {buffer=0})
-		vim.keymap.set('n', '<c-s>', vim.lsp.buf.signature_help, {buffer=0})
-		vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {buffer=0})
-		vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, {buffer=0})
-		vim.keymap.set('n', 'gT', vim.lsp.buf.type_definition, {buffer=0})
-		vim.keymap.set('n', 'gI', vim.lsp.buf.implementation, {buffer=0})
-		vim.keymap.set('n', '<leader>dn', vim.diagnostic.goto_next, {buffer=0})
-		vim.keymap.set('n', '<leader>dp', vim.diagnostic.goto_prev, {buffer=0})
-		vim.keymap.set('n', '<leader>dl', "<cmd>Telescope diagnostics<cr>", {buffer=0})
-		vim.keymap.set('n', '<leader>cr', vim.lsp.buf.rename, {buffer=0})
-		vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, {buffer=0})
-	end,
+lspconfig = require 'lspconfig'
+
+local servers = {
+	gopls = true,
+	solargraph = true,
 }
+
+-- TODO: Determine if omnifunc is worth using
+-- buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+-- TODO: do some sort of formatting, when to use this vs Ale?
+--   buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+
+
+local custom_attach = function()
+	vim.keymap.set('n', 'K', vim.lsp.buf.hover, {buffer=0})
+	vim.keymap.set('n', '<c-s>', vim.lsp.buf.signature_help, {buffer=0})
+	vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {buffer=0})
+	vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, {buffer=0})
+	vim.keymap.set('n', 'gT', vim.lsp.buf.type_definition, {buffer=0})
+	vim.keymap.set('n', 'gI', vim.lsp.buf.implementation, {buffer=0})
+	vim.keymap.set('n', 'gr', vim.lsp.buf.references, {buffer=0})
+	vim.keymap.set('n', '<leader>df', "<cmd>Telescope diagnostics<cr>", {buffer=0})
+	vim.keymap.set('n', '<leader>cr', vim.lsp.buf.rename, {buffer=0})
+	vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, {buffer=0})
+	--- Diagnostics - TODO determine if i should move this out of LSP custom_attach
+	vim.keymap.set('n', '<leader>dn', vim.diagnostic.goto_next, {buffer=0})
+	vim.keymap.set('n', '<leader>dp', vim.diagnostic.goto_prev, {buffer=0})
+	vim.keymap.set('n', '<leader>sl', function()vim.diagnostic.open_float(0,{scope='line'})end, {buffer=0})
+end
+
+-- lua {{{
+local runtime_path = vim.split(package.path, ";")
+table.insert(runtime_path, "lua/?.lua")
+table.insert(runtime_path, "lua/?/init.lua")
+
+lspconfig.sumneko_lua.setup({
+	on_attach = custom_attach,
+	settings = {
+		Lua = {
+			runtime = {
+				-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+				version = "LuaJIT",
+				-- Setup your lua path
+				path = runtime_path,
+			},
+			diagnostics = {
+				-- Get the language server to recognize the `vim` global
+				globals = { "vim" },
+			},
+			workspace = {
+				-- Make the server aware of Neovim runtime files
+				library = vim.api.nvim_get_runtime_file("", true),
+			},
+			-- Do not send telemetry data containing a randomized but unique identifier
+			telemetry = {
+				enable = false,
+			},
+		},
+	},
+})
 -- }}}
+
+local setup_server = function(server, config)
+	if not config then
+		return
+	end
+
+	if type(config) ~= "table" then
+		config = {}
+	end
+
+
+	config = vim.tbl_deep_extend("force", {
+		on_attach = custom_attach,
+	}, config)
+
+	lspconfig[server].setup(config)
+end
 	
+for server, config in pairs(servers) do
+	setup_server(server, config)
+end
+
 -- }}}
 
 
@@ -158,7 +225,6 @@ cmp.setup{
 
 	-- TODO add Highlight groups, can highlight deprecated functions and other fun things
 }
-
 -- }}}
 
 -- Plugin config {{{
@@ -175,9 +241,7 @@ vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 -- nvim-treesitter {{{
 require'nvim-treesitter.configs'.setup {
     highlight = {
-        enable = true,
-    }
-}
+        enable = true, } }
 -- }}}
 
 -- lualine {{{
@@ -188,4 +252,3 @@ require('lualine').setup {
   }
 }
 -- }}}
-
