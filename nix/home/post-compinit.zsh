@@ -4,3 +4,7 @@ zstyle ':completion:*' special-dirs true
 zstyle ':completion:*' menu select
 zmodload zsh/complist
 
+# Put secret stuff here
+if [ -f ~/.localrc ]; then
+    . ~/.localrc
+fi
