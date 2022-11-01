@@ -10,13 +10,32 @@ git clone -C ~/ --recurse-submodules <url>
 
 ```
 
-Run bin/install.sh
+# macOS
+- Install Nix and enable flakes
+- Install Homebrew
+- Setup nix-darwin
 
-Manually install homebrew for use w/ nix-darwin
+Bootstrap nix-darwin
+```
+nix build .#darwinConfigurations.<HOSTNAME>.system
 
+./result/sw/bin/darwin-rebuild switch --flake .
 
-Run commands
+```
 
-$ darwin-rebuild switch -I darwin-config=$HOME/dotfiles/nix/darwin.nix
+After bootstrapping you can run the following to apply changes.
+`darwin-rebuild switch --flake /Users/dylanmeskis/dotfiles/nix`
 
-$ home-manager switch -f ~/dotfiles/nix/home.nix
+- Boot strap home-manager
+```
+nix build .#homeConfigurations.dylanmeskis
+./result/activate
+
+```
+
+After bootstrapping:
+`home-manager switch --flake /Users/dylanmeskis/dotfiles/nix`
+
+- Download Brave Browser. Sync it.
+- Download 1Password. Set quick access to Shift + Meta + P
+- Replace Spotlight w/ Raycast
