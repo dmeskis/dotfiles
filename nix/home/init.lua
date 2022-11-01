@@ -29,7 +29,7 @@ o.undofile = true
 
 -- Environment {{{
 -- map */+ registers to macOS pastebuffer
-o.clipboard = unnamed
+o.clipboard = 'unnamed'
 -- }}}
 
 -- Search {{{
@@ -173,7 +173,7 @@ cmp.setup{
 		["<C-d>"] = cmp.mapping.scroll_docs(-4),
 		["<C-f>"] = cmp.mapping.scroll_docs(4),
 		["<C-e>"] = cmp.mapping.close(),
-		["<C-y>"] = cmp.mapping.confirm {
+		["<CR>"] = cmp.mapping.confirm {
 			behavior = cmp.ConfirmBehavior.Insert,
 			select = true,
 		},
