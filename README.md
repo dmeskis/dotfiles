@@ -10,9 +10,25 @@ git clone -C ~/ --recurse-submodules <url>
 
 ```
 
-Run bin/install.sh
+# macOS
+- Install Nix and enable flakes
+- Setup nix-darwin
+```
+nix build .#darwinConfigurations.<HOSTNAME>.system
 
-Manually install homebrew for use w/ nix-darwin
+./result/sw/bin/darwin-rebuild switch --flake .
+
+```
+- Setup home-manager
+```
+nix build .#homeConfigurations.dylanmeskis
+
+```
+
+
+
+
+
 
 
 Run commands
