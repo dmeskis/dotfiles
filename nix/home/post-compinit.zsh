@@ -4,4 +4,3 @@ zstyle ':completion:*' special-dirs true
 zstyle ':completion:*' menu select
 zmodload zsh/complist
 
-bindkey '^ ' autosuggest-accept 

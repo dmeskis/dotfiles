@@ -153,7 +153,7 @@ local setup_server = function(server, config)
 
 	lspconfig[server].setup(config)
 end
-	
+
 for server, config in pairs(servers) do
 	setup_server(server, config)
 end
@@ -166,7 +166,11 @@ local cmp = require "cmp"
 local lspkind = require "lspkind"
 
 cmp.setup{
-	-- more to do here
+        -- i -- insert
+        -- x -- visual
+        -- s -- select
+        -- c -- cmdline
+        -- S-Tab -- Shift-Tab
 	mapping = {
 		["<C-n>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
 		["<C-p>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
@@ -179,7 +183,7 @@ cmp.setup{
 		},
 
 		["<c-space>"] = cmp.mapping {
-			i = cmp.mapping.complete(),
+			i = cmp.mapping.complete(), -- Opens the suggestions
 			c = function(
 				_ --[[fallback]]
 				)
@@ -194,6 +198,11 @@ cmp.setup{
 		},
 
 		["<tab>"] = cmp.config.disable,
+                -- I don't think this does anything w/ my current config.. 
+                -- ["<c-r>"] = cmp.mapping.confirm {
+                --     behavior = cmp.ConfirmBehavior.Replace,
+                --     select = true,
+                -- },
 	},
 	-- Order matters (by default). That gives them priority
 	-- you can configure:
