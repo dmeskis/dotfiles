@@ -12,6 +12,7 @@ git clone -C ~/ --recurse-submodules <url>
 
 # macOS
 - Install Nix and enable flakes
+- Install Homebrew
 - Setup nix-darwin
 ```
 nix build .#darwinConfigurations.<HOSTNAME>.system
@@ -24,6 +25,10 @@ nix build .#darwinConfigurations.<HOSTNAME>.system
 nix build .#homeConfigurations.dylanmeskis
 
 ```
+
+- Download Brave Browser. Sync it.
+- Download 1Password. Set quick access to Shift + Meta + P
+- Replace Spotlight w/ Raycast
 
 
 

@@ -18,6 +18,11 @@
       system = "aarch64-darwin";
       # pkgs = nixpkgs.legacyPackages.${system};
     in {
+      # HB 16" MacBook Pro 
+      darwinConfigurations."MacBook-Pro" = darwin.lib.darwinSystem {
+        system = "aarch64-darwin";
+        modules = [ ./darwin.nix ];
+      };
       # Personal macbook
       darwinConfigurations."Dylans-MBP" = darwin.lib.darwinSystem {
         system = "aarch64-darwin";
