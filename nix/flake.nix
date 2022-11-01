@@ -7,25 +7,26 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    darwin = {
+      url = "github:lnl7/nix-darwin/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { nixpkgs, home-manager, ... }:
+  outputs = { darwin, home-manager, nixpkgs, ... }:
     let
-      system = "aarch64-darwin";
-      pkgs = nixpkgs.legacyPackages.${system};
-    in {
-      homeConfigurations.dylanmeskis = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-
-        # Specify your home configuration modules here, for example,
-        # the path to your home.nix.
+      darwinARMSystem = darwin.lib.darwinSystem {
+        system = "aarch64-darwin";
         modules = [
-          ./home.nix
+          ./darwin.nix
+          home-manager.darwinModules.home-manager {
+            home-manager.users.dylanmeskis = homeManagerConfFor ./home.nix
+          }
         ];
-
-        # Optionally use extraSpecialArgs
-        # to pass through arguments to home.nix
-      };
+        specialArgs = { inherit nixpkgs; };
+      },
+    in {
+      defaultPackage.aarch64-darwin = darwinARMSystem.system;
     };
 }
 
