@@ -22,7 +22,7 @@
         system = "aarch64-darwin";
         modules = [ ./darwin.nix ];
       };
-      homeConfigurations."dylanmeskis@HB-Dylan" = home-manager.lib.homeManagerConfiguration {
+      homeConfigurations."dylanmeskis@HB-Dylan.home" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.aarch64-darwin;
         modules = [
           ./hosts/homebot-mbp/home.nix 
@@ -33,7 +33,7 @@
         system = "aarch64-darwin";
         modules = [ ./darwin.nix ];
       };
-      homeConfigurations."dylanmeskis@Dylans-MBP" = home-manager.lib.homeManagerConfiguration {
+      homeConfigurations."dylanmeskis@Dylans-MBP.home" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.aarch64-darwin;
         modules = [
           ./hosts/personal-m1-mbp/home.nix
