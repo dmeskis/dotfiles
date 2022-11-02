@@ -31,7 +31,8 @@
 
       homeConfigurations.dylanmeskis = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.aarch64-darwin;
-        modules = [ ./home.nix ];
+        modules = [ ./hosts/homebot-mbp/home.nix];
+        # modules = [ ./home.nix ];
       };
     };
 }
