@@ -13,12 +13,11 @@
     };
   };
 
-  outputs = { darwin, nixpkgs, home-manager, config, lib, ... }:
-    # with lib;
-    # with config;
+  outputs = { darwin, nixpkgs, home-manager, ... }:
     let
       system = "aarch64-darwin";
-      # pkgs = nixpkgs.legacyPackages.${system};
+      lib = nixpkgs.lib;
+      config = nixpkgs.config;
     in {
       # HB 16" MacBook Pro 
       darwinConfigurations."HB-Dylan" = darwin.lib.darwinSystem {
@@ -32,10 +31,12 @@
       };
 
       homeConfigurations.dylanmeskis = home-manager.lib.homeManagerConfiguration {
+        inherit lib;
+        # inherit config;
         pkgs = nixpkgs.legacyPackages.aarch64-darwin;
         modules = [
-          (lib.mkIf config.networking.hostName == "HB-Dylan" ( ./hosts/homebot-mbp/home.nix ))
-          (lib.mkIf config.networking.hostName == "Dylans-MBP" ( ./hosts/personal-m1-mbp/home.nix))
+          (lib.mkIf (config.networking.hostName == "HB-Dylan" )( ./hosts/homebot-mbp/home.nix ))
+          (lib.mkIf (config.networking.hostName == "Dylans-MBP") ( ./hosts/personal-m1-mbp/home.nix))
         ];
         # modules = [ ./home.nix ];
       };
