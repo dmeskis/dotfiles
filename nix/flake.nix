@@ -13,7 +13,9 @@
     };
   };
 
-  outputs = { darwin, nixpkgs, home-manager, ... }:
+  outputs = { darwin, nixpkgs, home-manager, config, lib, ... }:
+    # with lib;
+    # with config;
     let
       system = "aarch64-darwin";
       # pkgs = nixpkgs.legacyPackages.${system};
@@ -31,7 +33,10 @@
 
       homeConfigurations.dylanmeskis = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.aarch64-darwin;
-        modules = [ ./hosts/homebot-mbp/home.nix];
+        modules = [
+          (lib.mkIf config.networking.hostName == "HB-Dylan" ( ./hosts/homebot-mbp/home.nix ))
+          (lib.mkIf config.networking.hostName == "Dylans-MBP" ( ./hosts/personal-m1-mbp/home.nix))
+        ];
         # modules = [ ./home.nix ];
       };
     };
