@@ -125,10 +125,10 @@
         size = 50000;
         save = 50000;
       };
-      shellAliases = import ./home/aliases.nix;
+      shellAliases = import ../home/aliases.nix;
       defaultKeymap = "emacs";
-      initExtraBeforeCompInit = builtins.readFile ./home/pre-compinit.zsh;
-      initExtra = builtins.readFile ./home/post-compinit.zsh;
+      initExtraBeforeCompInit = builtins.readFile ../home/pre-compinit.zsh;
+      initExtra = builtins.readFile ../home/post-compinit.zsh;
 
       sessionVariables = rec {
         NVIM_TUI_ENABLE_TRUE_COLOR = "1";
@@ -265,7 +265,7 @@
 
        wezterm = {
          enable = true;
-         extraConfig = builtins.readFile ./home/extraConfig.wezterm.lua;
+         extraConfig = builtins.readFile ../home/extraConfig.wezterm.lua;
        };
 
        zoxide = {
@@ -277,8 +277,8 @@
 
   # More config files
   xdg.configFile = {
-    "nvim/init.lua".text = builtins.readFile ./home/init.lua;
-    "ideavim/ideavimrc".text = builtins.readFile ./home/ideavimrc;
+    "nvim/init.lua".text = builtins.readFile ../home/init.lua;
+    "ideavim/ideavimrc".text = builtins.readFile ../home/ideavimrc;
   };
 
 }

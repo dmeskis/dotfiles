@@ -28,7 +28,7 @@ After bootstrapping you can run the following to apply changes.
 
 - Boot strap home-manager
 ```
-nix build .#homeConfigurations.dylanmeskis
+nix build .#homeConfigurations.dylanmeskis.activationPackage
 ./result/activate
 
 ```
@@ -39,3 +39,7 @@ After bootstrapping:
 - Download Brave Browser. Sync it.
 - Download 1Password. Set quick access to Shift + Meta + P
 - Replace Spotlight w/ Raycast
+
+# Notes
+
+- Flakes are copied to the store and evaluted there. Uncommitted changes aren't copied to the store. Look into this
