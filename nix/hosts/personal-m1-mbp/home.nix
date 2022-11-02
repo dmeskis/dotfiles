@@ -3,8 +3,4 @@
   imports = [
     ../common.nix
   ];
-
-  home.packages with pkgs; [
-    circleci-cli
-  ];
 }
