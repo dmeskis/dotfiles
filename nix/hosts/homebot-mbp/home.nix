@@ -11,6 +11,11 @@
   programs = {
     zsh = {
       shellAliases = import ./homebotAliases.nix;
+
+      profileExtra = ''
+        # Set PATH, MANPATH, etc., for Homebrew.
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+      '';
     };
   };
 }
