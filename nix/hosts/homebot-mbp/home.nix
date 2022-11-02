@@ -7,4 +7,10 @@
   home.packages = with pkgs; [
     circleci-cli
   ];
+
+  programs = {
+    zsh = {
+      shellAliases = import ./homebotAliases.nix;
+    };
+  };
 }
