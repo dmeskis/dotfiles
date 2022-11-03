@@ -11,6 +11,7 @@
   programs = {
     zsh = {
       shellAliases = import ./homebotAliases.nix;
+      initExtra = builtins.readFile ./post-compinit.zsh;
 
       profileExtra = ''
         # Set PATH, MANPATH, etc., for Homebrew.
