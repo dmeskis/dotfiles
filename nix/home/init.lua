@@ -74,12 +74,18 @@ vim.keymap.set('n', '<C-l>', '<C-w>l', options)
 -- native lsp config {{{
 -- TODO: Look into using mason.nvim to manage this stuff
 
-lspconfig = require 'lspconfig'
+local lspconfig = require 'lspconfig'
 
 local servers = {
 	gopls = true,
 	solargraph = true,
+        terraformls = true,
 }
+
+vim.api.nvim_create_autocmd({"BufWritePre"}, {
+  pattern = {"*.tf", "*.tfvars"},
+  callback = vim.lsp.buf.formatting_sync,
+})
 
 -- TODO: Determine if omnifunc is worth using
 -- buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
