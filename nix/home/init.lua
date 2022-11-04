@@ -161,9 +161,30 @@ end
 -- }}}
 
 
--- completion {{{
+-- completion + snippets {{{
 local cmp = require "cmp"
 local lspkind = require "lspkind"
+local luasnip = require "luasnip"
+local types = require "luasnip.util.types"
+
+luasnip.config.set_config {
+    history = true,
+    updateevents = "TextChanged,TextChangedI",
+    enable_autosnippets = true,
+    ext_opts = {
+        [types.choiceNode] = {
+            active = {
+                virt_test = { { "<-", "Error" } },
+            },
+        },
+    },
+}
+
+vim.keymap.set({ "i", "s"}, "<c-k", function ()
+    if luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
+    end
+end, {silent = true})
 
 cmp.setup{
         -- i -- insert
@@ -230,6 +251,13 @@ cmp.setup{
 				luasnip = "[snip]",
 			}
 		}
+	},
+
+	snippet = {
+		expand = function(args)
+			luasnip.lsp_expand(args.body)
+		end,
+
 	},
 
 	-- TODO add Highlight groups, can highlight deprecated functions and other fun things
