@@ -28,7 +28,7 @@ After bootstrapping you can run the following to apply changes.
 
 - Boot strap home-manager
 ```
-nix build .#homeConfigurations.dylanmeskis
+nix build .#homeConfigurations.dylanmeskis.activationPackage
 ./result/activate
 
 ```
@@ -39,3 +39,8 @@ After bootstrapping:
 - Download Brave Browser. Sync it.
 - Download 1Password. Set quick access to Shift + Meta + P
 - Replace Spotlight w/ Raycast
+- Set a static hostname with `sudo scutil --set HostName '<NAME>'`, hostname is used in the flake file to apply each machine's respective config.
+
+# Notes
+
+- Flakes are copied to the store and evaluted there. Unadded changes aren't copied to the store.
