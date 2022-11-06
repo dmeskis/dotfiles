@@ -237,7 +237,10 @@
            cmp-buffer
            cmp-path
            lspkind-nvim
-           # cmp_luasnip
+           cmp_luasnip
+
+           # Snippets
+           luasnip
 
            # Lua
            # plenary-nvim

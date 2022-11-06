@@ -10,7 +10,6 @@ with pkgs; [
   exercism
   fd
   go_1_18
-  gopls
   imgcat
   kubectl
   lua5_3
@@ -20,6 +19,7 @@ with pkgs; [
   ripgrep
   shellcheck
   stack
+  steampipe
   tig
   tree
   unzip
@@ -27,6 +27,8 @@ with pkgs; [
   xsv
   zsh
   zsh-syntax-highlighting
-  # For nvim
+  # language servers
+  gopls
   sumneko-lua-language-server
+  terraform-ls
 ]
