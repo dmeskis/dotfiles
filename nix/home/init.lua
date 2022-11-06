@@ -74,12 +74,18 @@ vim.keymap.set('n', '<C-l>', '<C-w>l', options)
 -- native lsp config {{{
 -- TODO: Look into using mason.nvim to manage this stuff
 
-lspconfig = require 'lspconfig'
+local lspconfig = require 'lspconfig'
 
 local servers = {
 	gopls = true,
 	solargraph = true,
+        terraformls = true,
 }
+
+vim.api.nvim_create_autocmd({"BufWritePre"}, {
+  pattern = {"*.tf", "*.tfvars"},
+  callback = vim.lsp.buf.formatting_sync,
+})
 
 -- TODO: Determine if omnifunc is worth using
 -- buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
@@ -161,9 +167,30 @@ end
 -- }}}
 
 
--- completion {{{
+-- completion + snippets {{{
 local cmp = require "cmp"
 local lspkind = require "lspkind"
+local luasnip = require "luasnip"
+local types = require "luasnip.util.types"
+
+luasnip.config.set_config {
+    history = true,
+    updateevents = "TextChanged,TextChangedI",
+    enable_autosnippets = true,
+    ext_opts = {
+        [types.choiceNode] = {
+            active = {
+                virt_test = { { "<-", "Error" } },
+            },
+        },
+    },
+}
+
+vim.keymap.set({ "i", "s"}, "<c-k", function ()
+    if luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
+    end
+end, {silent = true})
 
 cmp.setup{
         -- i -- insert
@@ -230,6 +257,13 @@ cmp.setup{
 				luasnip = "[snip]",
 			}
 		}
+	},
+
+	snippet = {
+		expand = function(args)
+			luasnip.lsp_expand(args.body)
+		end,
+
 	},
 
 	-- TODO add Highlight groups, can highlight deprecated functions and other fun things
