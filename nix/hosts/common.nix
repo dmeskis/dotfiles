@@ -220,6 +220,7 @@
 
            # Buffer / Pane / File Management
            telescope-nvim
+           telescope-file-browser-nvim
            # telescope-fzf-native-nvim
 
            # Panes / Larger features
