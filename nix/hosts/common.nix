@@ -97,7 +97,7 @@
           branch = false;
         };
 
-        push.autoSetupRemote = true;
+        # push.autoSetupRemote = true;
         url."https://github.com/homebotapp/".insteadOf = [
           "git@github.com:homebotapp/"
           "git@github.com:homebotapp/"
