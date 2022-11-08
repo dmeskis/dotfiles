@@ -98,6 +98,12 @@
         };
 
         push.autoSetupRemote = true;
+        url."https://github.com/homebotapp/".insteadOf = [
+          "git@github.com:homebotapp/"
+          "git@github.com:homebotapp/"
+          "ssh://git@github.com/homebotapp/"
+          "ssh://git@github.com/homebotapp/"
+        ];
       };
 
       ignores = [
