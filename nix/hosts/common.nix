@@ -97,7 +97,13 @@
           branch = false;
         };
 
-        push.autoSetupRemote = true;
+        # push.autoSetupRemote = true;
+        url."https://github.com/homebotapp/".insteadOf = [
+          "git@github.com:homebotapp/"
+          "git@github.com:homebotapp/"
+          "ssh://git@github.com/homebotapp/"
+          "ssh://git@github.com/homebotapp/"
+        ];
       };
 
       ignores = [
@@ -221,7 +227,7 @@
            # Buffer / Pane / File Management
            telescope-nvim
            telescope-file-browser-nvim
-           # telescope-fzf-native-nvim
+           telescope-fzf-native-nvim
 
            # Panes / Larger features
            # tagbar - look into
