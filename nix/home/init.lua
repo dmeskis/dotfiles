@@ -281,6 +281,18 @@ vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 vim.keymap.set('n', '<leader>fi', ":Telescope file_browser<CR>", { noremap = true })
 
+require("telescope").setup {
+    extensions = {
+        fzf = {
+            fuzzy = true,
+            override_generic_sorter = true,
+            override_file_sorter = true,
+            case_mode = "smart_case",
+        }
+    }
+}
+
+require("telescope").load_extension "fzf"
 require("telescope").load_extension "file_browser"
 -- }}}
 
