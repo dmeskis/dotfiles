@@ -135,6 +135,7 @@
       defaultKeymap = "emacs";
       initExtraBeforeCompInit = builtins.readFile ../home/pre-compinit.zsh;
       initExtra = builtins.readFile ../home/post-compinit.zsh;
+      completionInit = "autoload -Uz compinit && compinit";
 
       sessionVariables = rec {
         NVIM_TUI_ENABLE_TRUE_COLOR = "1";
