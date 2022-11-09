@@ -28,3 +28,7 @@ setopt hist_find_no_dups
 setopt nobeep
 # Shutup autocomplete bell
 # unsetopt LIST_BEEP
+
+if type brew &>/dev/null; then
+	FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+fi
