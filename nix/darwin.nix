@@ -21,11 +21,13 @@
     ];
     casks = [
       "anki"
+      "linear-linear"
       "raycast"
-      "wezterm"
       "rectangle"
       "shortcat"
       "spotify"
+      "todoist"
+      "wezterm"
     ];
   };
 
