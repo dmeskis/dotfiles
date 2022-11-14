@@ -119,6 +119,10 @@
       ];
     };
 
+    lazygit = {
+      enable = true;
+    };
+
     zsh = {
       enable = true;
       enableCompletion = true;
@@ -174,10 +178,11 @@
         enable = true;
         vimAlias = true;
         plugins = with pkgs.vimPlugins; [
-           # Syntax
+           # Language + Syntax
            vim-nix
            vim-ruby
            vim-go
+           vim-terraform
            rust-vim
 
            (nvim-treesitter.withPlugins (
