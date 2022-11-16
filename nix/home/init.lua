@@ -274,12 +274,50 @@ cmp.setup{
 
 -- nvim-telescope telescope.nvim {{{
 -- https://github.com/tjdevries/config_manager/blob/286d247041868b45fbd00c972af8e5d0aeb24caa/xdg_config/nvim/lua/tj/telescope/mappings.lua
+
 local builtin = require('telescope.builtin')
-vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
+
+
+local function find_files()
+  -- local opts = themes.get_ivy {
+  --   hidden = false,
+  --   sorting_strategy = "ascending",
+  --   layout_config = { height = 9 },
+  -- }
+  builtin.find_files {
+    sorting_strategy = "descending",
+    scroll_strategy = "cycle",
+    layout_config = {
+      -- height = 10,
+    },
+  }
+end
+
+-- function M.curbuf()
+--   local opts = themes.get_dropdown {
+--     winblend = 10,
+--     border = true,
+--     previewer = false,
+--     shorten_path = false,
+--   }
+--   require("telescope.builtin").current_buffer_fuzzy_find(opts)
+-- end
+local function search_all_files()
+  require("telescope.builtin").find_files({hidden=true})
+end
+
+-- local function fs()
+--   require("telescope.builtin").find_files({hidden=false, sorting_strategy = "descending"})
+-- end
+
+-- vim.keymap.set('n', '<leader>fs', fs, {})
+vim.keymap.set('n', '<leader>fa', search_all_files, {})
+vim.keymap.set('n', '<leader>ff', builtin.current_buffer_fuzzy_find, {})
+vim.keymap.set('n', '<leader>fd', find_files, {})
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
 vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
-vim.keymap.set('n', '<leader>fi', ":Telescope file_browser<CR>", { noremap = true })
+vim.keymap.set('n', '<leader>fe', ":Telescope file_browser<CR>", { noremap = true })
 
 require("telescope").setup {
     extensions = {

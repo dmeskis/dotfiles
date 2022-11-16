@@ -100,8 +100,6 @@
         # push.autoSetupRemote = true;
         url."https://github.com/homebotapp/".insteadOf = [
           "git@github.com:homebotapp/"
-          "git@github.com:homebotapp/"
-          "ssh://git@github.com/homebotapp/"
           "ssh://git@github.com/homebotapp/"
         ];
       };
@@ -119,6 +117,10 @@
         "venv/**/*"
         ".idea/**/*"
       ];
+    };
+
+    lazygit = {
+      enable = true;
     };
 
     zsh = {
@@ -176,10 +178,11 @@
         enable = true;
         vimAlias = true;
         plugins = with pkgs.vimPlugins; [
-           # Syntax
+           # Language + Syntax
            vim-nix
            vim-ruby
            vim-go
+           vim-terraform
            rust-vim
 
            (nvim-treesitter.withPlugins (
