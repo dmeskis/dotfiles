@@ -31,4 +31,5 @@ with pkgs; [
   gopls
   sumneko-lua-language-server
   terraform-ls
+  rubyPackages.solargraph
 ]
