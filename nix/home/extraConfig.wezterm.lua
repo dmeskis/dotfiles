@@ -8,12 +8,12 @@ return {
     {
       key = '|',
       mods = 'LEADER',
-      action = wezterm.action.SplitHorizontal { domain = 'CurrentPaneDomain' },
+      action = act.SplitHorizontal { domain = 'CurrentPaneDomain' },
     },
     {
       key = '-',
       mods = 'LEADER',
-      action = wezterm.action.SplitVertical { domain = 'CurrentPaneDomain' },
+      action = act.SplitVertical { domain = 'CurrentPaneDomain' },
     },
     {
       key = 'h', mods = 'LEADER', action = act.AdjustPaneSize { 'Left', 5 },
@@ -28,8 +28,10 @@ return {
     {
         key = 'w',
         mods = 'CMD',
-        action = wezterm.action.CloseCurrentPane { confirm = true },
+        action = act.CloseCurrentPane { confirm = true },
     },
+    { key = 'PageUp', mods = 'SHIFT', action = act.ScrollByPage(-0.5) },
+    { key = 'PageDown', mods = 'SHIFT', action = act.ScrollByPage(0.5) },
   },
 }
 
