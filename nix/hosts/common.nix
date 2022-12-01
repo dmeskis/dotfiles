@@ -249,6 +249,8 @@
            lspkind-nvim
            cmp_luasnip
 
+           # which-key-nvim
+
            # Snippets
            luasnip
 
@@ -267,7 +269,6 @@
            # git-messenger * Looks neat!
            # octo-nvim
            # git-worktree
-           # which-key
            # marks.nvim
            # harpoon *
            # neorg (replace obsidian/notion?)
