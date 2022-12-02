@@ -6,11 +6,13 @@
 
   home.packages = with pkgs; [
     circleci-cli
+    yarn
   ];
 
   programs = {
     zsh = {
       shellAliases = import ./homebotAliases.nix;
+      initExtraBeforeCompInit = builtins.readFile ./pre-compinit.zsh;
       initExtra = builtins.readFile ./post-compinit.zsh;
 
       profileExtra = ''
