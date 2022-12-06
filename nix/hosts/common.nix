@@ -184,6 +184,7 @@
            vim-go
            vim-terraform
            rust-vim
+           vim-rails
 
            (nvim-treesitter.withPlugins (
              plugins: with plugins; [
