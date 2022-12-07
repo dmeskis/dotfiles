@@ -254,6 +254,7 @@
 
            # Snippets
            luasnip
+           friendly-snippets
 
            # Lua
            # plenary-nvim

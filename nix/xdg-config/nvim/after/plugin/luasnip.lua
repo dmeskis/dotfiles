@@ -5,12 +5,16 @@ for _, ft_path in ipairs(vim.api.nvim_get_runtime_file("lua/dm/snips/ft/*.lua", 
   loadfile(ft_path)()
 end
 
+require("luasnip.loaders.from_vscode").lazy_load()
+require'luasnip'.filetype_extend("ruby", {"rails"})
+
 ls.config.set_config {
   -- This tells LuaSnip to remember to keep around the last snippet.
   -- You can jump back into it even if you move outside of the selection
-  history = false,
+  history = true,
   -- This one is cool cause if you have dynamic snippets, it updates as you type!
-  updateevents = "TextChanged,TextChangedI",
+  update_events = "TextChanged,TextChangedI",
+  delete_check_events = "TextChanged",
   -- Autosnippets:
   enable_autosnippets = true,
   -- Crazy highlights!!
@@ -46,12 +50,12 @@ vim.keymap.set("i", "<c-l>", function()
   end
 end)
 
--- vim.keymap.set("i", "<c-h>", function()
---   if ls.choice_active() then
---     ls.change_choice(-1)
---   end
--- end)
+vim.keymap.set("i", "<c-h>", function()
+  if ls.choice_active() then
+    ls.change_choice(-1)
+  end
+end)
 
 vim.keymap.set("i", "<c-u>", require "luasnip.extras.select_choice")
 
-vim.keymap.set('n', '<leader><leader>s', ':source ~/.config/nvim/after/plugin/luasnip.lua<cr>', options)
+vim.keymap.set('n', '<leader><leader>s', ':runtime! ~/dotfiles/nix/xdg-config/nvim/lua/dm/snips/**/*.lua<cr>', options)
