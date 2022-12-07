@@ -170,27 +170,6 @@ end
 -- completion + snippets {{{
 local cmp = require "cmp"
 local lspkind = require "lspkind"
-local luasnip = require "luasnip"
-local types = require "luasnip.util.types"
-
-luasnip.config.set_config {
-    history = true,
-    updateevents = "TextChanged,TextChangedI",
-    enable_autosnippets = true,
-    ext_opts = {
-        [types.choiceNode] = {
-            active = {
-                virt_test = { { "<-", "Error" } },
-            },
-        },
-    },
-}
-
-vim.keymap.set({ "i", "s"}, "<c-k", function ()
-    if luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump()
-    end
-end, {silent = true})
 
 cmp.setup{
         -- i -- insert
@@ -226,10 +205,10 @@ cmp.setup{
 
 		["<tab>"] = cmp.config.disable,
                 -- I don't think this does anything w/ my current config.. 
-                -- ["<c-r>"] = cmp.mapping.confirm {
-                --     behavior = cmp.ConfirmBehavior.Replace,
-                --     select = true,
-                -- },
+                ["<c-r>"] = cmp.mapping.confirm {
+                    behavior = cmp.ConfirmBehavior.Replace,
+                    select = true,
+                },
 	},
 	-- Order matters (by default). That gives them priority
 	-- you can configure:
@@ -241,6 +220,7 @@ cmp.setup{
 		-- you can only enable for specific file types, but the source knows to do that
 		{ name = "nvim_lua" },
 		{ name = "nvim_lsp" },
+		{ name = "luasnip" },
 		{ name = "path" },
 		{ name = "buffer" },
 		-- TODO: watch youtube.com/watch?v=_Dnmphlwnjo around 26 min & add github_issues
@@ -261,13 +241,14 @@ cmp.setup{
 
 	snippet = {
 		expand = function(args)
-			luasnip.lsp_expand(args.body)
+			require("luasnip").lsp_expand(args.body)
 		end,
 
 	},
 
 	-- TODO add Highlight groups, can highlight deprecated functions and other fun things
 }
+
 -- }}}
 
 -- Plugin config {{{
@@ -318,7 +299,6 @@ vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
 vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 vim.keymap.set('n', '<leader>fe', ":Telescope file_browser<CR>", { noremap = true })
-
 
 require("telescope").setup {
     extensions = {

@@ -97,7 +97,7 @@
           branch = false;
         };
 
-        # push.autoSetupRemote = true;
+        push.autoSetupRemote = true;
         url."https://github.com/homebotapp/".insteadOf = [
           "git@github.com:homebotapp/"
           "ssh://git@github.com/homebotapp/"
@@ -254,6 +254,7 @@
 
            # Snippets
            luasnip
+           friendly-snippets
 
            # Lua
            # plenary-nvim
@@ -293,7 +294,7 @@
 
   # More config files
   xdg.configFile = {
-    "nvim/init.lua".text = builtins.readFile ../home/init.lua;
+    "nvim".source = ../xdg-config/nvim;
     "ideavim/ideavimrc".text = builtins.readFile ../home/ideavimrc;
   };
 
