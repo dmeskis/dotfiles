@@ -169,3 +169,27 @@ if <err_same> != nil {
     )
   ),
 })
+
+ls.add_snippets("go", {
+  s(
+    "elf",
+    fmta(
+      [[
+<val>, <err> := <f>(<args>)
+if <err_same> != nil {
+	log.Fatal(<err_log>)
+}
+<finish>
+]],
+      {
+        val = i(1),
+        err = i(2, "err"),
+        f = i(3),
+        args = i(4),
+        err_same = rep(2),
+        err_log = rep(2),
+        finish = i(0),
+      }
+    )
+  ),
+})
