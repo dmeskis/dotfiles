@@ -55,8 +55,8 @@ o.scrolloff=3
 
 -- Mappings {{{
 options = { noremap = true }
-vim.keymap.set('n', '<leader>sv', ':source ~/dotfiles/nix/home/init.lua<cr>', options)
-vim.keymap.set('n', '<leader>ev', ':edit ~/dotfiles/nix/home/init.lua<cr>', options)
+vim.keymap.set('n', '<leader>sv', ':source ~/dotfiles/nix/xdg-config/nvim/init.lua<cr>', options)
+vim.keymap.set('n', '<leader>ev', ':edit ~/dotfiles/nix/xdg-config/nvim/init.lua<cr>', options)
 
 -- kj = <esc>
 vim.keymap.set('i', 'kj', '<esc>', options)
@@ -329,4 +329,14 @@ require('lualine').setup {
       always_divide_middle = true;
   }
 }
+-- }}}
+
+-- vim-go {{{
+-- TOOD: fix this, for some reason GOBIN isn't working w/ nix, :help GoInstallBinaries not very helpful
+vim.g['go_bin_path'] = '/Users/dylanmeskis/go/bin'
+vim.cmd [[
+let g:go_metalinter_command = 'golangci-lint'
+let g:go_metalinter_autosave_enabled = []
+let g:go_metalinter_enabled = []
+]]
 -- }}}
