@@ -280,6 +280,14 @@
          ];
        };
 
+       gpg = {
+         enable = true;
+       };
+
+       password-store = {
+         enable = true;
+       };
+
        wezterm = {
          enable = true;
          extraConfig = builtins.readFile ../home/extraConfig.wezterm.lua;
