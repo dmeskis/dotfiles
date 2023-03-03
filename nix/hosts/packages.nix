@@ -6,7 +6,8 @@ with pkgs; [
   bandwhich
   bat
   cheat
-  curl
+  # curl
+  cfssl
   exercism
   fd
   go_1_18
