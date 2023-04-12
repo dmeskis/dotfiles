@@ -87,5 +87,4 @@ hbvpn() {
 }
 # End functions }}}
 
-eval "$(rbenv init - zsh)"
 

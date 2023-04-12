@@ -288,6 +288,10 @@
          enable = true;
        };
 
+       rbenv = {
+        enable = true;
+       };
+
        wezterm = {
          enable = true;
          extraConfig = builtins.readFile ../home/extraConfig.wezterm.lua;

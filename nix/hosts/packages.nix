@@ -7,10 +7,10 @@ with pkgs; [
   bat
   cheat
   # curl
-  cfssl
   exercism
   fd
   go_1_18
+  google-cloud-sdk
   imgcat
   kubectl
   lua5_3
@@ -22,6 +22,7 @@ with pkgs; [
   stack
   steampipe
   tig
+  tmux
   tree
   unzip
   wget
