@@ -116,7 +116,7 @@ local runtime_path = vim.split(package.path, ";")
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 
-lspconfig.sumneko_lua.setup({
+lspconfig.lua_ls.setup({
 	on_attach = custom_attach,
 	settings = {
 		Lua = {
@@ -288,10 +288,18 @@ local function search_all_files()
   require("telescope.builtin").find_files({hidden=true})
 end
 
+-- local function grep_prompt()
+--   require("telescope.builtin").grep_string {
+--     path_display = { "shorten" },
+--     search = vim.fn.input "Grep String > ",
+--   }
+-- end
+
 -- local function fs()
 --   require("telescope.builtin").find_files({hidden=false, sorting_strategy = "descending"})
 -- end
 
+-- search
 -- vim.keymap.set('n', '<leader>fs', fs, {})
 vim.keymap.set('n', '<leader>fa', search_all_files, {})
 vim.keymap.set('n', '<leader>ff', builtin.current_buffer_fuzzy_find, {})
@@ -300,6 +308,9 @@ vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
 vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 vim.keymap.set('n', '<leader>fe', ":Telescope file_browser<CR>", { noremap = true })
+-- vim.keymap.set('n', '<leader>gp', grep_prompt, { noremap = true })
+
+-- map_tele("<space>gp", "grep_prompt")
 
 require("telescope").setup {
     extensions = {
