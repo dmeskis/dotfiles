@@ -149,8 +149,9 @@
         GIT_EDITOR = EDITOR;
 
         CHEAT_CONFIG_PATH = "${config.home.homeDirectory}/dotfiles/cheat/conf.yml";
-        # GOPATH = "$HOME";
 
+        GOPATH = "$HOME/go";
+        PATH = "$PATH:$GOPATH/bin";
         # PATH = "$HOME/.emacs.d/bin:$HOME/bin:$PATH";
       };
         # envExtra
@@ -278,6 +279,18 @@
            # dirbuf
            # targets.nvim
          ];
+       };
+
+       gpg = {
+         enable = true;
+       };
+
+       password-store = {
+         enable = true;
+       };
+
+       rbenv = {
+        enable = true;
        };
 
        wezterm = {
