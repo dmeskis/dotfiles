@@ -6,10 +6,11 @@ with pkgs; [
   bandwhich
   bat
   cheat
-  curl
+  # curl
   exercism
   fd
   go_1_18
+  google-cloud-sdk
   imgcat
   kubectl
   lua5_3
@@ -21,6 +22,7 @@ with pkgs; [
   stack
   steampipe
   tig
+  tmux
   tree
   unzip
   wget
@@ -32,4 +34,5 @@ with pkgs; [
   sumneko-lua-language-server
   terraform-ls
   rubyPackages.solargraph
+  python39Packages.python-lsp-server
 ]

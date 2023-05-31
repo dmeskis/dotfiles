@@ -19,6 +19,7 @@
         export PGHOST='127.0.0.1'
         export PGPORT='5432'
         export PGUSER='postgres'
+        export AWS_VAULT_BACKEND='pass'
 
         # Set PATH, MANPATH, etc., for Homebrew.
         eval "$(/opt/homebrew/bin/brew shellenv)"

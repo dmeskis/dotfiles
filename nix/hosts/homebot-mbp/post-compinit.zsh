@@ -76,11 +76,15 @@ hbvpn() {
     PW=$(op item get pritunl-prod --fields label=password)
     OTP=$(op item get pritunl-prod --otp)
     /Applications/Pritunl.app/Contents/Resources/pritunl-client start xmm40rfvrrgdz4vr --password "$PW$OTP"
+  elif [[ $1 == "bev" ]];
+  then
+    PW=$(op item get pritunl-bev --fields label=password)
+    OTP=$(op item get pritunl-bev --otp)
+    /Applications/Pritunl.app/Contents/Resources/pritunl-client start jqu7kagnrmnk6mil --password "$PW$OTP"
   else
     echo "Unknown account"
   fi
 }
 # End functions }}}
 
-eval "$(rbenv init - zsh)"
 
