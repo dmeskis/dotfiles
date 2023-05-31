@@ -34,4 +34,5 @@ with pkgs; [
   sumneko-lua-language-server
   terraform-ls
   rubyPackages.solargraph
+  python39Packages.python-lsp-server
 ]
