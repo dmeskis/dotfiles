@@ -253,6 +253,9 @@
 
            # which-key-nvim
 
+           copilot-vim
+           # copilot-lua
+
            # Snippets
            luasnip
            friendly-snippets

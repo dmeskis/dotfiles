@@ -69,4 +69,6 @@
   rga = "rg --hidden";
   rgaa = "rg -uu --hidden";
   rgaaa = "rg -uu --glob '!{.git,node_modules,build,dist,tmp}' --hidden";
+
+  snowsql = "/Applications/SnowSQL.app/Contents/MacOS/snowsql";
 }
