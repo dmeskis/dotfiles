@@ -127,7 +127,9 @@
       enable = true;
       enableCompletion = true;
       enableAutosuggestions = true;
-      enableSyntaxHighlighting = true;
+      syntaxHighlighting = {
+        enable = true;
+      };
       history = {
         path = "${config.xdg.dataHome}/zsh/.zsh_history";
         size = 50000;
