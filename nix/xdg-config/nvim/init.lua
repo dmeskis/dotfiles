@@ -81,6 +81,7 @@ local servers = {
 	solargraph = true,
         terraformls = true,
 	pylsp = true,
+        pyright = true,
 }
 
 vim.api.nvim_create_autocmd({"BufWritePre"}, {

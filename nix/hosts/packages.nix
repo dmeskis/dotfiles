@@ -35,4 +35,5 @@ with pkgs; [
   terraform-ls
   rubyPackages.solargraph
   python39Packages.python-lsp-server
+  nodePackages.pyright
 ]
