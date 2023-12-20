@@ -354,5 +354,6 @@ vim.cmd [[
 let g:go_metalinter_command = 'golangci-lint'
 let g:go_metalinter_autosave_enabled = []
 let g:go_metalinter_enabled = []
+let g:go_fmt_command = 'goimports'
 ]]
 -- }}}

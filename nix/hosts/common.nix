@@ -69,7 +69,7 @@
       };
 
       extraConfig = {
-        credential.helper = "osxkeychain";
+        # credential.helper = "osxkeychain"; # TODO: This is included in the git config in the nixpkg by default. Unfortunately with home-manager there's no way to order credentials how you wish (e.g. gh auth credential should come first). the plan is to migrate off home-manager eventually for full control over configuring your packages. There's an open issue https://github.com/nix-community/home-manager/issues/4439
 
         color.ui = true;
         color.branch = {
@@ -153,7 +153,7 @@
         CHEAT_CONFIG_PATH = "${config.home.homeDirectory}/dotfiles/cheat/conf.yml";
 
         GOPATH = "$HOME/go";
-        PATH = "$PATH:$GOPATH/bin";
+        PATH = "$PATH:$GOPATH/bin:$HOME/.local/bin";
         # PATH = "$HOME/.emacs.d/bin:$HOME/bin:$PATH";
       };
         # envExtra
