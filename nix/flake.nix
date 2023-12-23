@@ -29,11 +29,11 @@
         ];
       };
       # Personal macbook
-      darwinConfigurations."Dylans-MBP" = darwin.lib.darwinSystem {
+      darwinConfigurations."Dylans-MacBook-Pro" = darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         modules = [ ./darwin.nix ];
       };
-      homeConfigurations."dylanmeskis@Dylans-MBP.home" = home-manager.lib.homeManagerConfiguration {
+      homeConfigurations."dylanmeskis" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.aarch64-darwin;
         modules = [
           ./hosts/personal-m1-mbp/home.nix
