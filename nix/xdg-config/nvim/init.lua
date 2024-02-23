@@ -357,3 +357,81 @@ let g:go_metalinter_enabled = []
 let g:go_fmt_command = 'goimports'
 ]]
 -- }}}
+
+
+-- nvim-dap {{{
+-- require('dap-python').setup('~/.virtualenvs/debugpy/bin/python')
+require('dap-python').setup()
+local dap = require('dap')
+local dapui = require('dapui')
+local dap_python = require('dap-python')
+
+-- set up nvim-dap-ui
+dapui.setup()
+dap.listeners.after.event_initialized['dapui_config'] = function()
+    dapui.open()
+end
+dap.listeners.before.event_terminated['dapui_config'] = function()
+    dapui.close()
+end
+dap.listeners.before.event_exited['dapui_config'] = function()
+    dapui.close()
+end
+
+-- keymaps
+vim.keymap.set('n', '<leader>db', dap.toggle_breakpoint, options)
+vim.keymap.set('n', '<leader>dB', function()dap.set_breakpoint(vim.fn.input("Breakpoint condition: "))end, options)
+vim.keymap.set('n', '<leader>dr', dap.repl.toggle, options)
+vim.keymap.set('n', '<leader>dc', dap.continue, options)
+vim.keymap.set('n', '<leader>dp', dap.pause, options)
+vim.keymap.set('n', '<leader>dt', dap.terminate, options)
+vim.keymap.set('n', '<leader>dn', dap.run_to_cursor, options)
+vim.keymap.set('n', '<leader>de', dap.step_over, options)
+vim.keymap.set('n', '<leader>di', dap.step_into, options)
+vim.keymap.set('n', '<leader>do', dap.step_out, options)
+vim.keymap.set('n', '<leader>du', dap.up, options)
+vim.keymap.set('n', '<leader>dd', dap.down, options)
+vim.keymap.set('n', '<leader>dg', function()require('dapui').toggle()end, options)
+vim.keymap.set('n', '<leader>dTp', dap_python.test_method, options)
+
+-- adapters
+--
+-- dap.adapters.python = {
+--     type = 'executable';
+--     command = '/Users/dylanmeskis/.local/share/nvim/lspinstall/python/node_modules/.bin/pyright-langserver';
+--     args = { '--stdio' };
+-- }
+table.insert(dap.configurations.python, {
+  name = 'Dagon Configuration',
+  type = 'python',
+  request = 'attach',
+  connect = {
+	  host = 'localhost',
+	  port = 5678,
+  },
+  cwd = vim.fn.getcwd(),
+  pathMappings = {
+	  {
+		  localRoot = function()
+			  return vim.fn.input("Local code folder > ", vim.fn.getcwd(), "file")
+		  end,
+		  remoteRoot = function()
+			  return vim.fn.input("Container code folder > ", "/opt/dagster/app", "file")
+		  end,
+	  },
+  },
+  justMyCode = true,
+  -- ... more options, see https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings
+})
+
+table.insert(dap.configurations.python, {
+  name = 'Dagster: Debug dagit',
+  type = 'python',
+  request = 'launch',
+  module = 'dagster',
+  args = {'dev'},
+  envFile = '/Users/dylanmeskis/code/homebot/dagon/.env',
+  justMyCode = true,
+})
+
+-- }}}

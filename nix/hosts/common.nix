@@ -153,7 +153,7 @@
         CHEAT_CONFIG_PATH = "${config.home.homeDirectory}/dotfiles/cheat/conf.yml";
 
         GOPATH = "$HOME/go";
-        PATH = "$PATH:$GOPATH/bin:$HOME/.local/bin";
+        PATH = "$PATH:$GOPATH/bin:$HOME/.local/bin:$HOME/Library/Python/3.12/bin";
         # PATH = "$HOME/.emacs.d/bin:$HOME/bin:$PATH";
       };
         # envExtra
@@ -267,7 +267,9 @@
            # popup-nvim
 
            # Check out
-           # nvim-dap
+           nvim-dap
+           nvim-dap-ui
+           nvim-dap-python
            # packer.nvim
            # undotree
            # refactoring.nvim
