@@ -48,7 +48,7 @@
  # gsa = "git stash apply";
  # gsl = "git stash list";
  # gsp = "git stash pop";
- # cleanup = "git branch --merged master | grep -v -e 'master' -e '\*' | xargs -n 1 git branch -d && git remote prune origin";
+ cleanup = "git branch --merged | grep -Ev '(^\*|master|main|dev|homebot)' | xargs -n 1 git branch -d && git remote prune origin";
 
   l1 = "tree --dirsfirst -ChFL 1";
   l2 = "tree --dirsfirst -ChFL 2";
