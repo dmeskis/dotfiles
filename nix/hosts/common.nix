@@ -57,7 +57,7 @@
         st = "status";
         tags = "tag -l";
         undo = "reset --soft HEAD^";
-        cleanup = "branch --merged | grep -v '\*\|master\|main\|develop\|homebot' | xargs -n 1 git branch -d && git remote prune origin";
+        cleanup = "branch --merged | grep -Ev '\*\|master\|main\|develop\|homebot' | xargs -n 1 git branch -d && git remote prune origin";
       };
 
       delta = {
