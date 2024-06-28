@@ -57,7 +57,7 @@
         st = "status";
         tags = "tag -l";
         undo = "reset --soft HEAD^";
-        cleanup = "branch --merged master | grep -v -e 'master' -e '\*' | xargs -n 1 git branch -d && git remote prune origin";
+        cleanup = "branch --merged | grep -v '\*\|master\|main\|develop\|homebot' | xargs -n 1 git branch -d && git remote prune origin";
       };
 
       delta = {
@@ -153,7 +153,7 @@
         CHEAT_CONFIG_PATH = "${config.home.homeDirectory}/dotfiles/cheat/conf.yml";
 
         GOPATH = "$HOME/go";
-        PATH = "$PATH:$GOPATH/bin:$HOME/.local/bin:$HOME/Library/Python/3.12/bin";
+        PATH = "$PATH:$GOPATH/bin:$HOME/.local/bin";
         # PATH = "$HOME/.emacs.d/bin:$HOME/bin:$PATH";
       };
         # envExtra
@@ -196,8 +196,6 @@
                tree-sitter-cpp
                tree-sitter-dockerfile
                tree-sitter-fish
-               tree-sitter-go
-               tree-sitter-html
                tree-sitter-json
                tree-sitter-latex
                tree-sitter-lua

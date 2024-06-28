@@ -21,6 +21,11 @@ avprod() {
   aws-vault exec --mfa-token="$(op item get aws-prod --otp)" prod --duration=8h
 }
 
+avnexus() {
+  opon
+  aws-vault exec --mfa-token="$(op item get aws-nexus --otp)" nexus --duration=8h
+}
+
 avdev() {
   opon
   aws-vault exec --mfa-token="$(op item get aws-dev --otp)" dev --duration=8h
@@ -59,28 +64,60 @@ gen_colors () {
 }
 
 # pritunl
-hbvpn() {
+# sxrfgfri6vfyjbf6y5pwxc5xaa    pritunl.dev.hmbt.co                                      Dev - Data & Infra              4 years ago
+# 43agfs2n3jaynmshoqtxeim4eu    pritunl-dev                                              Private                         3 years ago
+# bljhr2m3w55e2gcqe75dc2kpji    pritunl-nexus                                            Private                         8 months ago
+# i2iokabxpml4ep55pkiwjihcf4    pritunl-bev                                              Private                         1 year ago
+# vlhtmhmw4zg7vdqcto6uj76ohe    pritunl-data                                             Private                         3 years ago
+# oefimw4a3jdfhnqau7fu3hgc6e    pritunl-prod                                             Private                         3 years ago
+vpnon() {
   opon
   if [[ $1 == "dev" ]]
   then
-    PW=$(op item get pritunl-dev --fields label=password)
-    OTP=$(op item get pritunl-dev --otp)
+    PW=$(op item get 43agfs2n3jaynmshoqtxeim4eu --fields label=password)
+    OTP=$(op item get 43agfs2n3jaynmshoqtxeim4eu --otp)
     /Applications/Pritunl.app/Contents/Resources/pritunl-client start tyrkdgrxvvtiopkt --password "$PW$OTP"
   elif [[ $1 == "data" ]];
   then
-    PW=$(op item get pritunl-data --fields label=password)
-    OTP=$(op item get pritunl-data --otp)
+    PW=$(op item get vlhtmhmw4zg7vdqcto6uj76ohe --fields label=password)
+    OTP=$(op item get vlhtmhmw4zg7vdqcto6uj76ohe --otp)
     /Applications/Pritunl.app/Contents/Resources/pritunl-client start 395ld93i3exs8n7i --password "$PW$OTP"
   elif [[ $1 == "prod" ]];
   then
-    PW=$(op item get pritunl-prod --fields label=password)
-    OTP=$(op item get pritunl-prod --otp)
+    PW=$(op item get oefimw4a3jdfhnqau7fu3hgc6e --fields label=password)
+    OTP=$(op item get oefimw4a3jdfhnqau7fu3hgc6e --otp)
     /Applications/Pritunl.app/Contents/Resources/pritunl-client start xmm40rfvrrgdz4vr --password "$PW$OTP"
   elif [[ $1 == "bev" ]];
   then
-    PW=$(op item get pritunl-bev --fields label=password)
-    OTP=$(op item get pritunl-bev --otp)
+    PW=$(op item get i2iokabxpml4ep55pkiwjihcf4 --fields label=password)
+    OTP=$(op item get i2iokabxpml4ep55pkiwjihcf4 --otp)
     /Applications/Pritunl.app/Contents/Resources/pritunl-client start jqu7kagnrmnk6mil --password "$PW$OTP"
+  elif [[ $1 == "nexus" ]];
+  then
+    PW=$(op item get bljhr2m3w55e2gcqe75dc2kpji --fields label=password)
+    OTP=$(op item get bljhr2m3w55e2gcqe75dc2kpji --otp)
+    /Applications/Pritunl.app/Contents/Resources/pritunl-client start 654cbff780fc77ed --password "$PW$OTP"
+  else
+    echo "Unknown account"
+  fi
+}
+
+vpnoff() {
+  if [[ $1 == "dev" ]]
+  then
+    /Applications/Pritunl.app/Contents/Resources/pritunl-client stop tyrkdgrxvvtiopkt
+  elif [[ $1 == "data" ]];
+  then
+    /Applications/Pritunl.app/Contents/Resources/pritunl-client stop 395ld93i3exs8n7i
+  elif [[ $1 == "prod" ]];
+  then
+    /Applications/Pritunl.app/Contents/Resources/pritunl-client stop xmm40rfvrrgdz4vr
+  elif [[ $1 == "bev" ]];
+  then
+    /Applications/Pritunl.app/Contents/Resources/pritunl-client stop jqu7kagnrmnk6mil
+  elif [[ $1 == "nexus" ]];
+  then
+    /Applications/Pritunl.app/Contents/Resources/pritunl-client stop 654cbff780fc77ed
   else
     echo "Unknown account"
   fi
