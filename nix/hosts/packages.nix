@@ -9,7 +9,7 @@ with pkgs; [
   # curl
   exercism
   fd
-  go_1_18
+  go_1_22
   google-cloud-sdk
   imgcat
   kubectl
@@ -27,7 +27,7 @@ with pkgs; [
   tree
   unzip
   wget
-  xsv
+  xan
   zsh
   zsh-syntax-highlighting
   # language servers
@@ -35,6 +35,8 @@ with pkgs; [
   sumneko-lua-language-server
   terraform-ls
   rubyPackages.solargraph
-  python39Packages.python-lsp-server
-  nodePackages.pyright
+  python311Packages.python-lsp-server
+  python311Packages.python-lsp-black
+  pyright
+  # python311Packages.pyls-isort
 ]

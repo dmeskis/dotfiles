@@ -5,6 +5,8 @@
   home.username = "dylanmeskis";
   home.homeDirectory = "/Users/dylanmeskis";
 
+  nixpkgs.config.allowUnfree = true;
+
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
   # when a new Home Manager release introduces backwards
@@ -126,7 +128,7 @@
     zsh = {
       enable = true;
       enableCompletion = true;
-      enableAutosuggestions = true;
+      autosuggestion.enable = true;
       syntaxHighlighting = {
         enable = true;
       };
@@ -211,7 +213,6 @@
              ))
 
            # UI
-           colorbuddy-nvim
            gruvbox-material
            vim-gitgutter
            lualine-nvim

@@ -4,7 +4,7 @@ local wo = vim.wo --window-local options
 local bo = vim.bo -- buffer-local options
 local os = os
 
-require('colorbuddy').colorscheme('gruvbox-material')
+vim.cmd('colorscheme gruvbox-material')
 
 -- Hacks & quickfixes {{{
 -- https://github.com/nvim-telescope/telescope.nvim/issues/2145
