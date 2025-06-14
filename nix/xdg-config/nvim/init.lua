@@ -177,6 +177,8 @@ end
 local cmp = require "cmp"
 local lspkind = require "lspkind"
 
+require("copilot_cmp").setup()
+
 cmp.setup{
         -- i -- insert
         -- x -- visual
@@ -225,6 +227,7 @@ cmp.setup{
 	sources = {
 		-- you can only enable for specific file types, but the source knows to do that
 		{ name = "nvim_lua" },
+		{ name = "copilot" },
 		{ name = "nvim_lsp" },
 		{ name = "luasnip" },
 		{ name = "path" },
@@ -435,8 +438,37 @@ table.insert(dap.configurations.python, {
 })
 
 -- }}}
---
---
+
+
+-- AI/LLM tooling {{{
+-- copilot.nvim
+require("copilot").setup({
+  suggestion = { enabled = false },
+  panel = { enabled = false },
+})
+
+-- avante.nvim
+require("avante_lib").load()
+require("avante").setup({
+  provider = "copilot",
+  auto_suggestions_provider = "claude",
+  providers = {
+    copilot = {
+      endpoint = "https://api.githubcopilot.com",
+      model = "claude-3.7-sonnet",
+      proxy = nil, -- [protocol://]host[:port] Use this proxy
+      allow_insecure = false, -- Allow insecure server connections
+      timeout = 30000, -- Timeout in milliseconds
+      extra_request_body = {
+        temperature = 0.75,
+        max_tokens = 20480,
+      },
+    },
+  }
+})
+-- }}}
+
+
 -- TODO: Finish setting up neotest, might need some additional deps installed
 -- require("neotest").setup({
 --   adapters = {

@@ -225,10 +225,10 @@
            vim-commentary # gcap
            vim-indent-object # >aI
            # vim-easy-align # vipga
-           vim-eunuch # :Rename foo.rb
+           vim-eunuch # :Rename foo.rb # todo - do i need this? telescope can probably do this stuff for me. Don't thinnk i've ever used
            # vim-sneak # Or leap.nvim || hop.nvim
            ale # linting - ALEFix
-           tabular # TODO add https://github.com/tjdevries/config_manager/blob/7958de40dac4400a244ab5a0f04b9a9e60202fab/xdg_config/nvim/after/plugin/tabular.vim
+           tabular # TODO add https://github.com/tjdevries/config_manager/blob/7958de40dac4400a244ab5a0f04b9a9e60202fab/xdg_config/nvim/after/plugin/tabular.vim -- todo: don't think i've ever used this..
            # nerdtree
 
            # Buffer / Pane / File Management
@@ -238,12 +238,15 @@
 
            # Panes / Larger features
            # tagbar - look into
+
+           # Git
            vim-fugitive # Gblame
 
            # lsp
            nvim-lspconfig
 
            # completion
+           # check out blink.nvim as replacement for nvim-cmp
            nvim-cmp
            cmp-nvim-lsp
            cmp-nvim-lua
@@ -251,11 +254,15 @@
            cmp-path
            lspkind-nvim
            cmp_luasnip
+           copilot-cmp # https://github.com/zbirenbaum/copilot-cmp
 
            # which-key-nvim
 
-           copilot-vim
+           # AI/LLM tooling
+           copilot-lua # https://github.com/zbirenbaum/copilot.lua
+           avante-nvim
            # copilot-lua
+           # try avante.nvim 
 
            # Snippets
            luasnip

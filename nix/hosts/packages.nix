@@ -9,7 +9,7 @@ with pkgs; [
   # curl
   exercism
   fd
-  go_1_22
+  go
   google-cloud-sdk
   imgcat
   kubectl
