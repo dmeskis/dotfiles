@@ -435,3 +435,25 @@ table.insert(dap.configurations.python, {
 })
 
 -- }}}
+--
+--
+-- TODO: Finish setting up neotest, might need some additional deps installed
+-- require("neotest").setup({
+--   adapters = {
+--     require("neotest-python")({
+--       dap = { justMyCode = false },
+--     }),
+--     require("neotest-rspec")({
+--       dap = { justMyCode = false },
+--     }),
+--     require("neotest-plenary"),
+--     -- require("neotest-vim-test")({
+--     --   ignore_file_types = { "python", "vim", "lua" },
+--     -- }),
+--   },
+-- })
+-- https://github.com/nvim-lua/plenary.nvim
+-- https://github.com/nvim-neotest/neotest
+-- https://github.com/rhysd/git-messenger.vim
+-- https://github.com/nix-community/nixvim
+-- https://github.com/nvimtools/none-ls.nvim

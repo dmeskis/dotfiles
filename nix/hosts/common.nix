@@ -262,8 +262,15 @@
            friendly-snippets
 
            # Lua
-           # plenary-nvim
+           plenary-nvim
            # popup-nvim
+
+           # testing
+           neotest
+           neotest-go
+           neotest-rspec
+           neotest-python
+           neotest-plenary
 
            # Check out
            nvim-dap
@@ -271,7 +278,7 @@
            nvim-dap-python
            # packer.nvim
            # undotree
-           # refactoring.nvim
+           # refactoring.nvim https://github.com/ThePrimeagen/refactoring.nvim?tab=readme-ov-file
            # fidget.nvim
            # trouble.nvim *
            # https://github.com/nvim-telescope/telescope-github.nvim

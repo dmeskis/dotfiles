@@ -30,6 +30,7 @@ with pkgs; [
   xan
   zsh
   zsh-syntax-highlighting
+  yq
   # language servers
   gopls
   sumneko-lua-language-server

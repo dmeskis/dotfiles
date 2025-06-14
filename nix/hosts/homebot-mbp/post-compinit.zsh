@@ -17,22 +17,18 @@ opoff() {
 
 # AWSVault
 avprod() {
-  opon
   aws-vault exec --mfa-token="$(op item get aws-prod --otp)" prod --duration=8h
 }
 
 avnexus() {
-  opon
   aws-vault exec --mfa-token="$(op item get aws-nexus --otp)" nexus --duration=8h
 }
 
 avdev() {
-  opon
   aws-vault exec --mfa-token="$(op item get aws-dev --otp)" dev --duration=8h
 }
 
 avsftp() {
-  opon
   aws-vault exec --mfa-token="$(op item get aws-sftp --otp)" sftp --duration=8h
 }
 
@@ -40,23 +36,6 @@ avsftp() {
 code() {
   VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCode" --args $* ;
 }
-
-# AWSVault
-avprod() {
-  opon
-  aws-vault exec --mfa-token="$(op item get aws-prod --otp)" prod --duration=8h
-}
-
-avdev() {
-  opon
-  aws-vault exec --mfa-token="$(op item get aws-dev --otp)" dev --duration=8h
-}
-
-avsftp() {
-  opon
-  aws-vault exec --mfa-token="$(op item get aws-sftp --otp)" sftp --duration=8h
-}
-
 
 # Misc
 gen_colors () {
@@ -74,9 +53,10 @@ vpnon() {
   opon
   if [[ $1 == "dev" ]]
   then
-    PW=$(op item get 43agfs2n3jaynmshoqtxeim4eu --fields label=password)
-    OTP=$(op item get 43agfs2n3jaynmshoqtxeim4eu --otp)
-    /Applications/Pritunl.app/Contents/Resources/pritunl-client start tyrkdgrxvvtiopkt --password "$PW$OTP"
+    echo "use bev instead of dev"
+    # PW=$(op item get 43agfs2n3jaynmshoqtxeim4eu --fields label=password)
+    # OTP=$(op item get 43agfs2n3jaynmshoqtxeim4eu --otp)
+    # /Applications/Pritunl.app/Contents/Resources/pritunl-client start tyrkdgrxvvtiopkt --password "$PW$OTP"
   elif [[ $1 == "data" ]];
   then
     PW=$(op item get vlhtmhmw4zg7vdqcto6uj76ohe --fields label=password)
