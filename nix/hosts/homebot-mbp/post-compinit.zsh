@@ -77,6 +77,11 @@ vpnon() {
     PW=$(op item get bljhr2m3w55e2gcqe75dc2kpji --fields label=password)
     OTP=$(op item get bljhr2m3w55e2gcqe75dc2kpji --otp)
     /Applications/Pritunl.app/Contents/Resources/pritunl-client start 654cbff780fc77ed --password "$PW$OTP"
+  elif [[ $1 == "forge" ]];
+  then
+    PW=$(op item get x3v2a3tynucrpaewsepodabh2m --fields label=password)
+    OTP=$(op item get x3v2a3tynucrpaewsepodabh2m --otp)
+    /Applications/Pritunl.app/Contents/Resources/pritunl-client start 8melsoswoe8cmme9 --password "$PW$OTP"
   else
     echo "Unknown account"
   fi
@@ -98,6 +103,9 @@ vpnoff() {
   elif [[ $1 == "nexus" ]];
   then
     /Applications/Pritunl.app/Contents/Resources/pritunl-client stop 654cbff780fc77ed
+  elif [[ $1 == "forge" ]];
+  then
+    /Applications/Pritunl.app/Contents/Resources/pritunl-client stop 8melsoswoe8cmme9
   else
     echo "Unknown account"
   fi
