@@ -283,6 +283,7 @@
            nvim-dap
            nvim-dap-ui
            nvim-dap-python
+           # hunk-nvim
            # packer.nvim
            # undotree
            # refactoring.nvim https://github.com/ThePrimeagen/refactoring.nvim?tab=readme-ov-file

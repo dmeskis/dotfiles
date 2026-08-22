@@ -62,6 +62,7 @@
 
   dc = "docker-compose";
 
+  vim = "nvim";
   viml = "vim -u NONE";
 
   tf = "terraform";

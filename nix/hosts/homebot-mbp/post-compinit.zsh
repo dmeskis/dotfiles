@@ -49,14 +49,14 @@ gen_colors () {
 # i2iokabxpml4ep55pkiwjihcf4    pritunl-bev                                              Private                         1 year ago
 # vlhtmhmw4zg7vdqcto6uj76ohe    pritunl-data                                             Private                         3 years ago
 # oefimw4a3jdfhnqau7fu3hgc6e    pritunl-prod                                             Private                         3 years ago
+
 vpnon() {
   opon
   if [[ $1 == "dev" ]]
   then
-    echo "use bev instead of dev"
-    # PW=$(op item get 43agfs2n3jaynmshoqtxeim4eu --fields label=password)
-    # OTP=$(op item get 43agfs2n3jaynmshoqtxeim4eu --otp)
-    # /Applications/Pritunl.app/Contents/Resources/pritunl-client start tyrkdgrxvvtiopkt --password "$PW$OTP"
+    PW=$(op item get 43agfs2n3jaynmshoqtxeim4eu --fields label=password)
+    OTP=$(op item get 43agfs2n3jaynmshoqtxeim4eu --otp)
+    /Applications/Pritunl.app/Contents/Resources/pritunl-client start tyrkdgrxvvtiopkt --password "$PW$OTP"
   elif [[ $1 == "data" ]];
   then
     PW=$(op item get vlhtmhmw4zg7vdqcto6uj76ohe --fields label=password)
@@ -71,7 +71,7 @@ vpnon() {
   then
     PW=$(op item get i2iokabxpml4ep55pkiwjihcf4 --fields label=password)
     OTP=$(op item get i2iokabxpml4ep55pkiwjihcf4 --otp)
-    /Applications/Pritunl.app/Contents/Resources/pritunl-client start jqu7kagnrmnk6mil --password "$PW$OTP"
+    /Applications/Pritunl.app/Contents/Resources/pritunl-client start 1fgi4bogcbyk1kag --password "$PW$OTP"
   elif [[ $1 == "nexus" ]];
   then
     PW=$(op item get bljhr2m3w55e2gcqe75dc2kpji --fields label=password)
@@ -99,7 +99,7 @@ vpnoff() {
     /Applications/Pritunl.app/Contents/Resources/pritunl-client stop xmm40rfvrrgdz4vr
   elif [[ $1 == "bev" ]];
   then
-    /Applications/Pritunl.app/Contents/Resources/pritunl-client stop jqu7kagnrmnk6mil
+    /Applications/Pritunl.app/Contents/Resources/pritunl-client stop 1fgi4bogcbyk1kag
   elif [[ $1 == "nexus" ]];
   then
     /Applications/Pritunl.app/Contents/Resources/pritunl-client stop 654cbff780fc77ed
