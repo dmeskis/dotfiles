@@ -6,6 +6,7 @@
 
   environment.systemPackages = with pkgs; [
     fd
+    ghostty-bin
     cheat
     nixfmt
     ruby
@@ -21,15 +22,17 @@
     ];
     casks = [
       "anki"
-      "linear-linear"
+      "linear"
       "raycast"
       "rectangle"
       "shortcat"
       "spotify"
-      "todoist"
+      "todoist-app"
       "wezterm"
     ];
   };
+
+  system.primaryUser = "dylanmeskis";
 
   system.defaults.NSGlobalDomain.AppleKeyboardUIMode = 3;
   system.defaults.NSGlobalDomain.ApplePressAndHoldEnabled = false;
@@ -68,9 +71,11 @@
   # $ darwin-rebuild switch -I darwin-config=$HOME/dotfiles/nix/darwin.nix
   environment.darwinConfig = "$HOME/dotfiles/nix/darwin.nix";
 
-  # Auto upgrade nix package and the daemon service.
-  services.nix-daemon.enable = true;
+  # nix-darwin manages nix-daemon unconditionally when `nix.enable` is on.
   # nix.package = pkgs.nix;
+
+  # Preserved from the hand-written /etc/nix/nix.conf that nix-darwin took over.
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Create /etc/zshrc that loads the nix-darwin environment.
   programs.zsh.enable = true;  # default shell on catalina
