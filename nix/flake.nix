@@ -17,25 +17,26 @@
     let
       system = "aarch64-darwin";
       pkgs = nixpkgs.legacyPackages.${system};
-    in {
-      # HB 16" MacBook Pro
-      darwinConfigurations."HB-Dylan" = darwin.lib.darwinSystem {
+
+      # darwin.nix is currently host-independent, so every machine shares it.
+      mkDarwin = darwin.lib.darwinSystem {
         inherit system;
         modules = [ ./darwin.nix ];
-      };
-      homeConfigurations."dylanmeskis@HB-Dylan" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        modules = [ ./hosts/homebot-mbp/home.nix ];
       };
 
-      # Personal macbook
-      darwinConfigurations."Dylans-MacBook-Pro" = darwin.lib.darwinSystem {
-        inherit system;
-        modules = [ ./darwin.nix ];
-      };
-      homeConfigurations."dylanmeskis" = home-manager.lib.homeManagerConfiguration {
+      mkHome = module: home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
-        modules = [ ./hosts/personal-m1-mbp/home.nix ];
+        modules = [ module ];
+      };
+    in {
+      darwinConfigurations = {
+        "DMESKIS-MBP" = mkDarwin; # work, current LocalHostName
+        "Dylans-MacBook-Pro" = mkDarwin; # personal
+      };
+
+      homeConfigurations = {
+        "dylanmeskis@DMESKIS-MBP" = mkHome ./hosts/homebot-mbp/home.nix;
+        "dylanmeskis" = mkHome ./hosts/personal-m1-mbp/home.nix;
       };
     };
 }
