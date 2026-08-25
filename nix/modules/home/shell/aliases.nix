@@ -1,3 +1,4 @@
+# Portable shell aliases. macOS-only ones live in ../darwin.nix.
 {
   reload = "exec \${SHELL} -l";
 
@@ -11,11 +12,6 @@
   dt = "cd ~/Desktop";
 
   be = "bundle exec ";
-
-  flush = "dscacheutil -flushcache";
-
-  hidedesktop = "defaults write com.apple.finder CreateDesktop -bool false && killall Finder";
-  showdesktop = "defaults write com.apple.finder CreateDesktop -bool true && killall Finder";
 
   x1 = "xargs -n1";
 
@@ -49,6 +45,4 @@
   rga = "rg --hidden";
   rgaa = "rg -uu --hidden";
   rgaaa = "rg -uu --glob '!{.git,node_modules,build,dist,tmp}' --hidden";
-
-  snowsql = "/Applications/SnowSQL.app/Contents/MacOS/snowsql";
 }

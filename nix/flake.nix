@@ -13,30 +13,39 @@
     };
   };
 
-  outputs = { darwin, nixpkgs, home-manager, ... }:
+  outputs =
+    {
+      darwin,
+      nixpkgs,
+      home-manager,
+      ...
+    }:
     let
-      system = "aarch64-darwin";
-      pkgs = nixpkgs.legacyPackages.${system};
+      mkDarwin =
+        module:
+        darwin.lib.darwinSystem {
+          system = "aarch64-darwin";
+          modules = [ module ];
+        };
 
-      # darwin.nix is currently host-independent, so every machine shares it.
-      mkDarwin = darwin.lib.darwinSystem {
-        inherit system;
-        modules = [ ./darwin.nix ];
-      };
-
-      mkHome = module: home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        modules = [ module ];
-      };
-    in {
+      mkHome =
+        system: module:
+        home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.${system};
+          modules = [ module ];
+        };
+    in
+    {
       darwinConfigurations = {
-        "DMESKIS-MBP" = mkDarwin; # work, current LocalHostName
-        "Dylans-MacBook-Pro" = mkDarwin; # personal
+        "DMESKIS-MBP" = mkDarwin ./hosts/homebot-mbp/darwin.nix; # current LocalHostName
+        "Dylans-MacBook-Pro" = mkDarwin ./hosts/personal-m1-mbp/darwin.nix;
       };
 
       homeConfigurations = {
-        "dylanmeskis@DMESKIS-MBP" = mkHome ./hosts/homebot-mbp/home.nix;
-        "dylanmeskis" = mkHome ./hosts/personal-m1-mbp/home.nix;
+        "dylanmeskis@DMESKIS-MBP" = mkHome "aarch64-darwin" ./hosts/homebot-mbp/home.nix;
+        "dylanmeskis" = mkHome "aarch64-darwin" ./hosts/personal-m1-mbp/home.nix;
       };
+
+      formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.nixfmt-tree;
     };
 }

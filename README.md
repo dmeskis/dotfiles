@@ -39,8 +39,15 @@ After bootstrapping:
 - Download Brave Browser. Sync it.
 - Download 1Password. Set quick access to Shift + Meta + P
 - Replace Spotlight w/ Raycast
-- Set a static hostname with `sudo scutil --set HostName '<NAME>'`, hostname is used in the flake file to apply each machine's respective config.
+- Hostnames: the two CLIs read *different* values, so set both if you add a machine.
+  - `darwin-rebuild` resolves `darwinConfigurations.<name>` from `scutil --get LocalHostName`
+  - `home-manager` resolves `homeConfigurations.<user>@<name>` from `hostname` (i.e. `scutil --get HostName`)
+  ```
+  sudo scutil --set HostName '<NAME>'
+  sudo scutil --set LocalHostName '<NAME>'
+  ```
 
 # Notes
 
 - Flakes are copied to the store and evaluted there. Unadded changes aren't copied to the store.
+- Run `nix fmt` before committing.

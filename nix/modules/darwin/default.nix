@@ -1,3 +1,4 @@
+# Shared macOS system configuration, imported by every darwin host.
 { config, pkgs, ... }:
 
 {
@@ -16,14 +17,16 @@
     onActivation = {
       autoUpdate = true;
       upgrade = true;
-      # Deliberately left at "none" to avoid deleting manually installed 
+      # Deliberately left at "none" to avoid deleting manually installed
       # taps/casks at work
       cleanup = "none";
     };
 
+    # Shared across machines. Work-only casks live in
+    # hosts/homebot-mbp/darwin.nix; homebrew.casks is a list option, so the
+    # host's entries merge with these.
     casks = [
       "anki"
-      "linear"
       "raycast"
       "rectangle"
       "shortcat"
@@ -72,7 +75,10 @@
   # nix.package = pkgs.nix;
 
   # Preserved from the hand-written /etc/nix/nix.conf that nix-darwin took over.
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
   nix.gc = {
     automatic = true;
     interval.Day = 7;
@@ -81,7 +87,7 @@
   nix.optimise.automatic = true;
 
   # Create /etc/zshrc that loads the nix-darwin environment.
-  programs.zsh.enable = true;  # default shell on catalina
+  programs.zsh.enable = true; # default shell on catalina
   # programs.fish.enable = true;
 
   # Used for backwards compatibility, please read the changelog before changing.
