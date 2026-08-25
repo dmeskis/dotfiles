@@ -48,7 +48,6 @@
           st = "status";
           tags = "tag -l";
           undo = "reset --soft HEAD^";
-          # cleanup = "branch --merged | grep -Ev '(^\*|master|main|dev|homebot)' | xargs -n 1 git branch -d && git remote prune origin";
         };
 
         color.ui = true;
@@ -135,8 +134,6 @@
 
       sessionVariables = rec {
         NVIM_TUI_ENABLE_TRUE_COLOR = "1";
-
-        HOME_MANAGER_CONFIG = "${config.home.homeDirectory}/dotfiles/nix/home.nix";
 
         EDITOR = "vim";
         VISUAL = EDITOR;

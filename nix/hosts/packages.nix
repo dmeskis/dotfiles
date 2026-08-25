@@ -16,7 +16,6 @@ with pkgs; [
   lua53Packages.busted
   nixfmt
   redis
-  ruby
   ripgrep
   shellcheck
   stack

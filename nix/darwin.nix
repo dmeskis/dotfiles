@@ -4,22 +4,23 @@
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
 
+  # User CLI tools live in home-manager (hosts/packages.nix). Keep this list to
+  # things that genuinely must be system-wide
   environment.systemPackages = with pkgs; [
-    fd
     ghostty-bin
-    cheat
-    nixfmt
-    ruby
-    shellcheck
-    tree
-    zsh
   ];
 
   homebrew = {
     enable = true;
-    taps = [
-      "wez/wezterm"
-    ];
+
+    onActivation = {
+      autoUpdate = true;
+      upgrade = true;
+      # Deliberately left at "none" to avoid deleting manually installed 
+      # taps/casks at work
+      cleanup = "none";
+    };
+
     casks = [
       "anki"
       "linear"
@@ -67,15 +68,17 @@
   system.defaults.finder._FXShowPosixPathInTitle = true;
   system.defaults.ActivityMonitor.OpenMainWindow = true;
 
-  # Use a custom configuration.nix location.
-  # $ darwin-rebuild switch -I darwin-config=$HOME/dotfiles/nix/darwin.nix
-  environment.darwinConfig = "$HOME/dotfiles/nix/darwin.nix";
-
   # nix-darwin manages nix-daemon unconditionally when `nix.enable` is on.
   # nix.package = pkgs.nix;
 
   # Preserved from the hand-written /etc/nix/nix.conf that nix-darwin took over.
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.gc = {
+    automatic = true;
+    interval.Day = 7;
+    options = "--delete-older-than 30d";
+  };
+  nix.optimise.automatic = true;
 
   # Create /etc/zshrc that loads the nix-darwin environment.
   programs.zsh.enable = true;  # default shell on catalina
@@ -83,5 +86,10 @@
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
-  system.stateVersion = 4;
+  system.stateVersion = 7;
+
+  # Nix here was installed while the default build-user group was still GID
+  # 30000; stateVersion >= 5 expects 350 and aborts activation on mismatch.
+  # Changing the real GID needs a full Nix reinstall, so pin the expectation.
+  ids.gids.nixbld = 30000;
 }
