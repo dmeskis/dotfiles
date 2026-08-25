@@ -6,7 +6,6 @@ with pkgs; [
   bandwhich
   bat
   cheat
-  # curl
   exercism
   fd
   go
@@ -33,11 +32,9 @@ with pkgs; [
   yq
   # language servers
   gopls
-  sumneko-lua-language-server
+  lua-language-server
   terraform-ls
   rubyPackages.solargraph
-  python311Packages.python-lsp-server
-  python311Packages.python-lsp-black
   pyright
-  # python311Packages.pyls-isort
+  black # for ALE
 ]

@@ -6,14 +6,17 @@
 
   home.packages = with pkgs; [
     circleci-cli
+    fnm # node version manager; see pre-compinit.zsh
     yarn
   ];
 
   programs = {
     zsh = {
       shellAliases = import ./homebotAliases.nix;
-      initExtraBeforeCompInit = builtins.readFile ./pre-compinit.zsh;
-      initExtra = builtins.readFile ./post-compinit.zsh;
+      initContent = lib.mkMerge [
+        (lib.mkOrder 555 (builtins.readFile ./pre-compinit.zsh))
+        (lib.mkOrder 1050 (builtins.readFile ./post-compinit.zsh))
+      ];
 
       profileExtra = ''
         export PGHOST='127.0.0.1'

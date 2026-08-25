@@ -72,103 +72,94 @@ vim.keymap.set('n', '<C-l>', '<C-w>l', options)
 -- }}}
 
 -- native lsp config {{{
--- TODO: Look into using mason.nvim to manage this stuff
+-- nvim-lspconfig >= 2.0 is just a bundle of `lsp/<name>.lua` default configs
+-- (cmd/filetypes/root_markers) that vim.lsp.config reads off the runtimepath.
+-- The old `require('lspconfig').<server>.setup{}` framework is deprecated and
+-- goes away in nvim-lspconfig v3. See :help lspconfig-nvim-0.11
+-- TODO: Look into using mason.nvim to manage the server binaries
 
-local lspconfig = require 'lspconfig'
+-- Default log level is WARN already, but solargraph streams gem warnings over
+-- stderr, which nvim logs at ERROR -- that grew lsp.log to 3.3GB. Keep it off
+-- unless actively debugging a server (:lua vim.lsp.set_log_level('debug')).
+vim.lsp.log.set_level('off')
 
-local servers = {
-	gopls = true,
-	solargraph = true,
-        terraformls = true,
-	pylsp = true,
-        pyright = true,
-}
-
-vim.api.nvim_create_autocmd('BufWritePre', {
-  pattern = {"*.tf", "*.tfvars"},
-  callback = function()
-      vim.lsp.buf.format({async=false})
-  end,
-  -- callback = vim.lsp.buf.formatting_sync,
+-- Buffer-local keymaps for whatever server attaches. Replaces the old
+-- per-server on_attach + setup_server wrapper.
+vim.api.nvim_create_autocmd('LspAttach', {
+	callback = function(args)
+		local opts = { buffer = args.buf }
+		vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+		vim.keymap.set('n', '<c-s>', vim.lsp.buf.signature_help, opts)
+		vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+		vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+		vim.keymap.set('n', 'gT', vim.lsp.buf.type_definition, opts)
+		vim.keymap.set('n', 'gI', vim.lsp.buf.implementation, opts)
+		vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+		vim.keymap.set('n', '<leader>df', '<cmd>Telescope diagnostics<cr>', opts)
+		vim.keymap.set('n', '<leader>cr', vim.lsp.buf.rename, opts)
+		vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
+		--- Diagnostics - TODO determine if i should move this out of LspAttach
+		vim.keymap.set('n', '<leader>dn', function() vim.diagnostic.jump({ count = 1, float = true }) end, opts)
+		vim.keymap.set('n', '<leader>dp', function() vim.diagnostic.jump({ count = -1, float = true }) end, opts)
+		vim.keymap.set('n', '<leader>sl', function() vim.diagnostic.open_float(0, { scope = 'line' }) end, opts)
+	end,
 })
 
--- TODO: Determine if omnifunc is worth using
--- buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+vim.api.nvim_create_autocmd('BufWritePre', {
+	pattern = { '*.tf', '*.tfvars' },
+	callback = function()
+		vim.lsp.buf.format({ async = false })
+	end,
+})
 
 -- TODO: do some sort of formatting, when to use this vs Ale?
---   buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
-
-
-local custom_attach = function()
-	vim.keymap.set('n', 'K', vim.lsp.buf.hover, {buffer=0})
-	vim.keymap.set('n', '<c-s>', vim.lsp.buf.signature_help, {buffer=0})
-	vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {buffer=0})
-	vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, {buffer=0})
-	vim.keymap.set('n', 'gT', vim.lsp.buf.type_definition, {buffer=0})
-	vim.keymap.set('n', 'gI', vim.lsp.buf.implementation, {buffer=0})
-	vim.keymap.set('n', 'gr', vim.lsp.buf.references, {buffer=0})
-	vim.keymap.set('n', '<leader>df', "<cmd>Telescope diagnostics<cr>", {buffer=0})
-	vim.keymap.set('n', '<leader>cr', vim.lsp.buf.rename, {buffer=0})
-	vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, {buffer=0})
-	--- Diagnostics - TODO determine if i should move this out of LSP custom_attach
-	vim.keymap.set('n', '<leader>dn', vim.diagnostic.goto_next, {buffer=0})
-	vim.keymap.set('n', '<leader>dp', vim.diagnostic.goto_prev, {buffer=0})
-	vim.keymap.set('n', '<leader>sl', function()vim.diagnostic.open_float(0,{scope='line'})end, {buffer=0})
-end
 
 -- lua {{{
-local runtime_path = vim.split(package.path, ";")
-table.insert(runtime_path, "lua/?.lua")
-table.insert(runtime_path, "lua/?/init.lua")
+-- Pattern lifted from nvim-lspconfig's lsp/lua_ls.lua docs: only teach lua_ls
+-- about the neovim runtime when the workspace doesn't ship its own .luarc.json.
+-- Note the narrow `library` -- nvim_get_runtime_file('', true) pulls in every
+-- plugin and is slow enough to cause problems (lspconfig issue #3189).
+vim.lsp.config('lua_ls', {
+	on_init = function(client)
+		if client.workspace_folders then
+			local path = client.workspace_folders[1].name
+			if
+				path ~= vim.fn.stdpath('config')
+				and (vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc'))
+			then
+				return
+			end
+		end
 
-lspconfig.lua_ls.setup({
-	on_attach = custom_attach,
-	settings = {
-		Lua = {
+		client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
 			runtime = {
-				-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-				version = "LuaJIT",
-				-- Setup your lua path
-				path = runtime_path,
-			},
-			diagnostics = {
-				-- Get the language server to recognize the `vim` global
-				globals = { "vim" },
+				-- Tell the language server which version of Lua you're using
+				version = 'LuaJIT',
+				-- Find lua modules the same way neovim does (:h lua-module-load)
+				path = { 'lua/?.lua', 'lua/?/init.lua' },
 			},
 			workspace = {
-				-- Make the server aware of Neovim runtime files
-				library = vim.api.nvim_get_runtime_file("", true),
 				checkThirdParty = false,
+				-- Make the server aware of Neovim runtime files
+				library = { vim.env.VIMRUNTIME },
 			},
 			-- Do not send telemetry data containing a randomized but unique identifier
-			telemetry = {
-				enable = false,
-			},
-		},
-	},
+			telemetry = { enable = false },
+		})
+	end,
+	settings = { Lua = {} },
 })
 -- }}}
 
-local setup_server = function(server, config)
-	if not config then
-		return
-	end
-
-	if type(config) ~= "table" then
-		config = {}
-	end
-
-
-	config = vim.tbl_deep_extend("force", {
-		on_attach = custom_attach,
-	}, config)
-
-	lspconfig[server].setup(config)
-end
-
-for server, config in pairs(servers) do
-	setup_server(server, config)
-end
+-- Defaults from lspconfig's lsp/<name>.lua are enough for these; add a
+-- vim.lsp.config('<name>', {...}) block above to override one.
+vim.lsp.enable({
+	'gopls',
+	'lua_ls',
+	'pyright',
+	'solargraph',
+	'terraformls',
+})
 
 -- }}}
 
@@ -176,8 +167,6 @@ end
 -- completion + snippets {{{
 local cmp = require "cmp"
 local lspkind = require "lspkind"
-
-require("copilot_cmp").setup()
 
 cmp.setup{
         -- i -- insert
@@ -227,7 +216,6 @@ cmp.setup{
 	sources = {
 		-- you can only enable for specific file types, but the source knows to do that
 		{ name = "nvim_lua" },
-		{ name = "copilot" },
 		{ name = "nvim_lsp" },
 		{ name = "luasnip" },
 		{ name = "path" },
@@ -336,9 +324,21 @@ require("telescope").load_extension "file_browser"
 -- }}}
 
 -- nvim-treesitter {{{
-require'nvim-treesitter.configs'.setup {
-    highlight = {
-        enable = true, } }
+-- Parsers come from pkgs.vimPlugins.nvim-treesitter.withPlugins in common.nix,
+-- which lands them (plus their matching queries) in a separate
+-- nvim-treesitter-grammars plugin dir, so there is nothing to :TSInstall and no
+-- need for tree-sitter-cli. To add a language, add its parser there.
+vim.api.nvim_create_autocmd('FileType', {
+	callback = function(args)
+		local lang = vim.treesitter.language.get_lang(args.match)
+		-- language.add returns nil (not an error) when we shipped no parser for
+		-- this filetype, which is the common case -- stay quiet and let the
+		-- regex syntax from vim-nix/vim-ruby/etc. handle those buffers.
+		if lang and vim.treesitter.language.add(lang) then
+			vim.treesitter.start(args.buf, lang)
+		end
+	end,
+})
 -- }}}
 
 -- lualine {{{
@@ -440,33 +440,6 @@ table.insert(dap.configurations.python, {
 -- }}}
 
 
--- AI/LLM tooling {{{
--- copilot.nvim
-require("copilot").setup({
-  suggestion = { enabled = false },
-  panel = { enabled = false },
-})
-
--- avante.nvim
-require("avante_lib").load()
-require("avante").setup({
-  provider = "copilot",
-  auto_suggestions_provider = "claude",
-  providers = {
-    copilot = {
-      endpoint = "https://api.githubcopilot.com",
-      model = "claude-3.7-sonnet",
-      proxy = nil, -- [protocol://]host[:port] Use this proxy
-      allow_insecure = false, -- Allow insecure server connections
-      timeout = 30000, -- Timeout in milliseconds
-      extra_request_body = {
-        temperature = 0.75,
-        max_tokens = 20480,
-      },
-    },
-  }
-})
--- }}}
 
 
 -- TODO: Finish setting up neotest, might need some additional deps installed
