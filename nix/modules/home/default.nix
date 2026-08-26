@@ -19,7 +19,10 @@
 
   home.username = "dylanmeskis";
   home.homeDirectory =
-    if pkgs.stdenv.hostPlatform.isDarwin then "/Users/${config.home.username}" else "/home/${config.home.username}";
+    if pkgs.stdenv.hostPlatform.isDarwin then
+      "/Users/${config.home.username}"
+    else
+      "/home/${config.home.username}";
 
   nixpkgs.config.allowUnfree = true;
 
@@ -47,6 +50,23 @@
     starship = {
       enable = true;
       enableZshIntegration = true;
+
+      # Starship only evaluates modules named in `format`, so this list is the
+      # allowlist -- anything omitted costs nothing.
+      settings = {
+        format = "$directory$git_branch$git_status$line_break$character";
+        command_timeout = 500;
+        scan_timeout = 10;
+
+        directory = {
+          truncation_length = 3;
+          truncate_to_repo = true;
+        };
+
+        # Submodule status means extra git work per submodule; the top-level
+        # dirty indicator is what actually gets read.
+        git_status.ignore_submodules = true;
+      };
     };
 
     direnv = {

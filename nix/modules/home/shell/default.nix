@@ -13,16 +13,23 @@
       path = "${config.xdg.dataHome}/zsh/.zsh_history";
       size = 50000;
       save = 50000;
+
+      share = true;
+      append = true;
+      ignoreDups = true;
+      ignoreAllDups = true;
+      saveNoDups = true;
+      findNoDups = true;
+      ignoreSpace = true;
     };
 
     shellAliases = import ./aliases.nix;
     defaultKeymap = "emacs";
 
-    # 550/1000 straddle home-manager's compinit call; hosts add their own
-    # fragments at 555/1050 so they land just after each of these.
     initContent = lib.mkMerge [
       (lib.mkOrder 550 (builtins.readFile ./pre-compinit.zsh))
       (lib.mkOrder 1000 (builtins.readFile ./post-compinit.zsh))
+      (lib.mkOrder 1500 (builtins.readFile ./post-prompt.zsh))
     ];
     completionInit = "autoload -Uz compinit && compinit";
 
