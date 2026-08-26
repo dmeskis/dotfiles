@@ -59,11 +59,6 @@
       enableZshIntegration = true;
     };
 
-    wezterm = {
-      enable = true;
-      extraConfig = builtins.readFile ./extraConfig.wezterm.lua;
-    };
-
     password-store = {
       enable = true;
       settings = {

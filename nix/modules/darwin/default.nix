@@ -32,7 +32,6 @@
       "shortcat"
       "spotify"
       "todoist-app"
-      "wezterm"
     ];
   };
 
