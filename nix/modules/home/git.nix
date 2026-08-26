@@ -56,6 +56,7 @@
       "*.swp"
       "*.pyc"
       ".bundle"
+      ".claude/"
       ".direnv/"
       ".DS_STORE"
       ".envrc"
