@@ -54,7 +54,7 @@
       # Starship only evaluates modules named in `format`, so this list is the
       # allowlist -- anything omitted costs nothing.
       settings = {
-        format = "$directory$git_branch$git_status$line_break$character";
+        format = "$directory$git_branch$git_status$aws$cmd_duration$line_break$character";
         command_timeout = 500;
         scan_timeout = 10;
 
